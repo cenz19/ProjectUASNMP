@@ -24,10 +24,6 @@ class HomePage : AppCompatActivity() {
 
 
 
-        binding.btnCreate.setOnClickListener {
-            intent = Intent(this, CreatePage::class.java)
-            intent.putExtra(CerbungAdapters.CARD_AUTHOR, username)
-            startActivity(intent)
-        }
+
     }
 }
