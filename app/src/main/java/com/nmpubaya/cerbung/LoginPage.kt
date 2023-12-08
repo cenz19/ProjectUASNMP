@@ -15,7 +15,7 @@ class LoginPage : AppCompatActivity() {
         binding = ActivityLoginPageBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.btnLogin.setOnClickListener {
+        binding.btnLoginss.setOnClickListener {
             val username = binding.txtUsernameLogin.text.toString()
             val password = binding.txtPasswordLogin.text.toString()
             var isUserValid = false
