@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.nmpubaya.cerbung"
-    compileSdk = 33
+    compileSdk = 34
 
 
     buildFeatures {
