@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("kotlin-parcelize")
 }
 
 android {
@@ -50,4 +51,5 @@ dependencies {
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     implementation("com.squareup.picasso:picasso:2.8")
     implementation("com.google.android.material:material:1.10.0")
+    implementation("androidx.viewpager2:viewpager2:1.0.0")
 }
