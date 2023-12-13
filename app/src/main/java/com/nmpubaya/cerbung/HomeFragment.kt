@@ -12,8 +12,8 @@ import com.nmpubaya.cerbung.databinding.FragmentHomeBinding
 import com.android.volley.toolbox.Volley
 import org.json.JSONObject
 import com.android.volley.Request
-import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.reflect.TypeToken
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 
 class HomeFragment : Fragment() {
 

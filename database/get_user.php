@@ -16,17 +16,14 @@
         $stmt->bind_param("ss", $username, $pass);
         $stmt->execute();
         $result = $stmt->get_result();
+        $array = array();
         if ($result->num_rows > 0) {
             while ($obj = $result->fetch_object()) {
-                if ($obj->username === $username && $obj->password === $pass) {
-                    echo json_encode(array("result" => "OK", "msg" => "Login successful"));
-                } else {
-                    echo json_encode(array("result" => "ERROR", "msg" => "Invalid username/password"));
-                    die();
-                }
+                $array[] = $obj;
+                echo json_encode(array("result" => "OK", "data" => $array));
             }
         } else {
-            echo json_encode(array("result" => "ERROR", "msg" => "No data found"));
+            echo json_encode(array("result" => "ERROR", "data" => "No data found"));
             die();
         }
     }
