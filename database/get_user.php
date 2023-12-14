@@ -1,22 +1,21 @@
 <?php 
     error_reporting(E_ERROR | E_PARSE);
-    $conn = new mysqli("localhost", "root", "mysql", "mydb");
+    $conn = new mysqli("localhost", "root", "", "mydb");
     if($conn->connect_errno) {
     $error = array('result' => 'ERROR', 'message' => 'Failed to connect');
     echo json_encode($error);
     die();
     }
 
-    if (isset($_POST["username"]) && isset($_POST["password"])) {
+    if (isset($_POST["username"])) {
         $username = $_POST["username"];
-        $pass = $_POST["password"];
         $conn->set_charset("UTF8");
-        $sql = "SELECT * FROM users where username=? AND password=?";
+        $sql = "SELECT * FROM users where username=?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("ss", $username, $pass);
+        $stmt->bind_param("s", $username);
         $stmt->execute();
-        $result = $stmt->get_result();
         $array = array();
+        $result = $stmt->get_result();
         if ($result->num_rows > 0) {
             while ($obj = $result->fetch_object()) {
                 $array[] = $obj;

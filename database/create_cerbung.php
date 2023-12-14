@@ -1,7 +1,7 @@
 <?php 
     error_reporting(E_ERROR | E_PARSE);
 
-    $conn = new mysqli("localhost", "root", "mysql", "mydb");
+    $conn = new mysqli("localhost", "root", "", "mydb");
     
     if ($conn->connect_errno) {
         $arr = array("result" => "ERROR",
@@ -27,7 +27,7 @@
         $arr = array("result" => "OK");
         echo json_encode($arr);
     } else {
-        $arr = array("result" => "ERROR", "msg" => "ID is required");
+        $arr = array("result" => "ERROR", "msg" => "Error making cerbung");
         echo json_encode($arr);
     }
 ?>

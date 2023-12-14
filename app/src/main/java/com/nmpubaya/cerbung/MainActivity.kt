@@ -8,6 +8,7 @@ import android.widget.Toast
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.nmpubaya.cerbung.databinding.ActivityMainBinding
@@ -17,32 +18,48 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding:ActivityMainBinding
 
     companion object {
-        var USERNAME = "username"
-        var NUM_LIKES = "num_likes"
+        val KEY_USERNAME = "username"
+        val KEY_NUM_FOLLOWER = "num_follower"
     }
 
-    fun cekLogin(username:String, password:String): User? {
-        var user: User? = null
-        val q = Volley.newRequestQueue(this);
-        val url = "http://10.0.2.2/cerbungdb/get_user.php";
-        var stringRequest = StringRequest(
-            Request.Method.POST, url,
+    fun cekLogin(username:String, password:String) {
+        val q = Volley.newRequestQueue(this)
+        val url = "http://10.0.2.2/cerbungdb/get_user.php"
+        val stringRequest = object : StringRequest(Request.Method.POST, url,
             {
                 Log.d("apiresult", it)
                 val obj = JSONObject(it)
                 if (obj.getString("result") == "OK") {
                     val data = obj.getJSONArray("data")
-                    val sType = object : TypeToken<User>() {}.type
-                    user = Gson().fromJson(data.toString(), sType) as User
+                    if (data.length() > 0) {
+                        val dataUser = data.getJSONObject(0)
+                        val sType = object : TypeToken<User>() { }.type
+                        val user = Gson().fromJson(dataUser.toString(), sType) as User
+                        Toast.makeText(this,"Welcome ${user.username}", Toast.LENGTH_LONG).show()
+                        val i = Intent(this, HomeActivity::class.java)
+                        i.putExtra(KEY_USERNAME, user.username)
+                        i.putExtra(KEY_NUM_FOLLOWER, user.num_follower)
+                        startActivity(i)
+                        finish()
+                    } else {
+                        Toast.makeText(this, "Username or Password is incorrect", Toast.LENGTH_LONG).show()
+                    }
                 }
             },
             {
-                Log.e("apiresult", it.message.toString())
+                Log.e("apiresult", it.printStackTrace().toString())
             }
-        )
-        //q.add(stringRequest)
-        return user
+        ) {
+            override fun getParams(): MutableMap<String, String>? {
+                val params = HashMap<String, String>()
+                params["username"] = username
+                params["password"] = password
+                return params
+            }
+        }
+        q.add(stringRequest)
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -51,12 +68,12 @@ class MainActivity : AppCompatActivity() {
         binding.btnLogin.setOnClickListener {
             val username = binding.txtUsernameLogin.text.toString()
             val password = binding.txtPasswordLogin.text.toString()
-            var user:User? = cekLogin(username, password)
-            if (username == user?.username && password == user.password) {
-                Toast.makeText(this, "Login Berhasil", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(this, "Login Gagal", Toast.LENGTH_SHORT).show()
-            }
+            cekLogin(username, password)
+        }
+
+        binding.btnSignUp.setOnClickListener {
+            val i = Intent(this, RegisterActivity::class.java)
+            startActivity(i)
         }
     }
 }
