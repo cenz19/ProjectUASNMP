@@ -1,5 +1,6 @@
 package com.nmpubaya.cerbung
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -25,10 +26,14 @@ class RegisterActivity : AppCompatActivity() {
                         val regUrl = "http://10.0.2.2/cerbungdb/create_user.php"
                         val regStrRequest = object : StringRequest(Request.Method.POST, regUrl,
                             {
-                                Toast.makeText(this, "Success", Toast.LENGTH_LONG).show()
+                                Toast.makeText(this, "Thanks for registering", Toast.LENGTH_LONG).show()
+                                val i = Intent(this, MainActivity::class.java)
+                                startActivity(i)
+                                finish()
                             },
                             {
                                 Log.e("apiresult", it.printStackTrace().toString())
+                                Toast.makeText(this, "Failed to register", Toast.LENGTH_LONG).show()
                             }
                         ) {
                             override fun getParams(): MutableMap<String, String>? {
