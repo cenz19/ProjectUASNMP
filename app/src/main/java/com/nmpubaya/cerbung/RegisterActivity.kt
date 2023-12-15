@@ -26,7 +26,8 @@ class RegisterActivity : AppCompatActivity() {
                         val regUrl = "http://10.0.2.2/cerbungdb/create_user.php"
                         val regStrRequest = object : StringRequest(Request.Method.POST, regUrl,
                             {
-                                Toast.makeText(this, "Thanks for registering", Toast.LENGTH_LONG).show()
+                                Toast.makeText(this, "Thanks for registering\nPlease login with your new account",
+                                    Toast.LENGTH_LONG).show()
                                 val i = Intent(this, MainActivity::class.java)
                                 startActivity(i)
                                 finish()
@@ -75,6 +76,12 @@ class RegisterActivity : AppCompatActivity() {
             val password = binding.txtPasswordRegister.text.toString()
             val regPass = binding.txtRepeatPasswordRegister.text.toString()
             register(username, password, regPass)
+        }
+
+        binding.btnCancel.setOnClickListener {
+            val i = Intent(this, MainActivity::class.java)
+            startActivity(i)
+            finish()
         }
     }
 }
