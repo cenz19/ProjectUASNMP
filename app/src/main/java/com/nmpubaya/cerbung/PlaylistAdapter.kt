@@ -27,13 +27,13 @@ class PlaylistAdapter(val playlists: ArrayList<Cerbung>): RecyclerView.Adapter<P
     }
 
     override fun onBindViewHolder(holder: PlaylistViewHolder, position: Int) {
-        val url = playlists[position].image_url
+        val url = playlists[position].url_gambar
         val builder = Picasso.Builder(holder.itemView.context)
         builder.listener { picasso, uri, exception -> exception.printStackTrace() }
-        Picasso.get().load(url).into(holder.binding.imgPlayList)
+        Picasso.get().load(url).into(holder.binding.imgCerbung)
         with(holder.binding) {
             txtTitle.text = playlists[position].title
-            txtSubtitle.text = playlists[position].subtitle
+            txtAuthor.text = playlists[position].subtitle
             txtContent.text = playlists[position].description
             btnLike.text = playlists[position].num_likes.toString() + " LIKES"
             btnLike.setOnClickListener {
