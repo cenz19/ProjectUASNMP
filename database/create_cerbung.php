@@ -4,8 +4,7 @@
     $conn = new mysqli("localhost", "root", "", "mydb");
     
     if ($conn->connect_errno) {
-        $arr = array("result" => "ERROR",
-                    "message" => "Failed to connect");
+        $arr = array("result" => "ERROR", "message" => "Failed to connect");
         echo json_encode($arr);
         die();
     }

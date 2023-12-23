@@ -3,18 +3,17 @@
 
     $conn = new mysqli("localhost", "root", "", "mydb");
     
-    if($conn->connect_errno) {
-    $error = array('result' => 'ERROR', 'message' => 'Failed to connect');
-    echo json_encode($error);
-    die();
+    if ($conn->connect_errno) {
+        $arr = array("result" => "ERROR", "message" => "Failed to connect");
+        echo json_encode($arr);
+        die();
     }
 
-    if (isset($_POST["username"])) {
-        $username = $_POST["username"];
-        $conn->set_charset("UTF8");
-        $sql = "SELECT * FROM users where username=?";
+    if (isset($_POST["id"])) {
+        $id = $_POST["id"];
+        $sql = "SELECT * FROM cerbungs WHERE id=?";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("s", $username);
+        $stmt->bind_param("i", $id);
         $stmt->execute();
         $array = array();
         $result = $stmt->get_result();

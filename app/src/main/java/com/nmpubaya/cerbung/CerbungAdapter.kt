@@ -1,11 +1,18 @@
 package com.nmpubaya.cerbung
 
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.android.volley.Request
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.nmpubaya.cerbung.databinding.CardCerbungBinding
 import com.squareup.picasso.Picasso
+import org.json.JSONObject
 
 class CerbungAdapter(val cerbungs: ArrayList<Cerbung>): RecyclerView.Adapter<CerbungAdapter.CerbungViewHolder>() {
     class CerbungViewHolder(val binding: CardCerbungBinding): RecyclerView.ViewHolder(binding.root)

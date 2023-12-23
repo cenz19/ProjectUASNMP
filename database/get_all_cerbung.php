@@ -1,6 +1,8 @@
 <?php 
     error_reporting(E_ERROR | E_PARSE);
-    $conn = new mysqli("localhost", "root", "mysql", "mydb");
+
+    $conn = new mysqli("localhost", "root", "", "mydb");
+
     if($conn->connect_errno) {
     $error = array('result' => 'ERROR', 'message' => 'Failed to connect');
     echo json_encode($error);
@@ -8,7 +10,7 @@
     }
 
     $conn->set_charset("UTF8");
-    $sql = "SELECT * FROM cerbungs";
+    $sql = "SELECT c.id, title, description, num_likes, access, num_paragraph, genre, url_gambar, waktu_dibuat, username FROM cerbungs c LEFT JOIN approval_cerbung ac ON c.id=ac.cerbung_id LEFT JOIN users u ON u.id=ac.author_id";
     $result = $conn->query($sql);
     $array = array();
     if ($result->num_rows > 0) {
@@ -20,4 +22,5 @@
         echo json_encode(array("result" => "ERROR", "message" => "No data found"));
         die();
     }
+    
 ?>

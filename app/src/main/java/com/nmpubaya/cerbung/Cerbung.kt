@@ -1,5 +1,9 @@
 package com.nmpubaya.cerbung
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class Cerbung(var id:Int,
                    var title:String,
                    var description:String,
@@ -10,4 +14,9 @@ data class Cerbung(var id:Int,
                    var url_gambar:String,
                    var waktu_dibuat: String,
                    var username: String
-                   )
+                   ) : Parcelable
+{
+    override fun toString(): String {
+        return title
+    }
+}

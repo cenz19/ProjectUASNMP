@@ -26,6 +26,7 @@ class HomeFragment : Fragment() {
         with(binding.cerbungRecView) {
             layoutManager = lm
             setHasFixedSize(true)
+            setHasOptionsMenu(true)
             adapter = CerbungAdapter(cerbungs)
         }
     }

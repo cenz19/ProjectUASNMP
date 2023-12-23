@@ -19,7 +19,8 @@ class ReadCerbungActivity : AppCompatActivity() {
     fun getAccessCerbung(cerbung_id: Int){
         val q = Volley.newRequestQueue(this)
         val url = "http://10.0.2.2/cerbungdb/get_cerbung.php"
-        var stringRequest = object : StringRequest(Request.Method.POST, url,
+        var stringRequest = object : StringRequest(
+            Request.Method.POST, url,
             {
                 Log.d("apiresult", it.toString())
                 val obj = JSONObject(it)
@@ -30,14 +31,15 @@ class ReadCerbungActivity : AppCompatActivity() {
                         val sType = object : TypeToken<Cerbung>() { }.type
                         val cerbung = Gson().fromJson(dataCerbung.toString(), sType) as Cerbung
                         if (cerbung.access == 1) {
-                            val restrictedFragment = ReadRestrictedFragment.newInstance(cerbung_id)
+                            val restrictedFragment = ReadRestrictedFragment.newInstance(cerbung)
+
                             supportFragmentManager?.beginTransaction()?.let {
                                 it.replace(R.id.container, restrictedFragment)
                                 it.addToBackStack(null)
                                 it.commit()
                             }
                         } else {
-                            val publicFragment = ReadPublicFragment.newInstance(cerbung_id)
+                            val publicFragment = ReadPublicFragment.newInstance(cerbung)
                             supportFragmentManager?.beginTransaction()?.let {
                                 it.replace(R.id.container, publicFragment)
                                 it.addToBackStack(null)
@@ -48,7 +50,7 @@ class ReadCerbungActivity : AppCompatActivity() {
                 }
             },
             {
-
+                Log.e("apiresult", it.message.toString())
             }) {
             override fun getParams(): MutableMap<String, String>? {
                 val params = HashMap<String, String>()
@@ -58,6 +60,7 @@ class ReadCerbungActivity : AppCompatActivity() {
         }
         q.add(stringRequest)
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityReadCerbungBinding.inflate(layoutInflater)

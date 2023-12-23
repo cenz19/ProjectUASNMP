@@ -6,20 +6,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.nmpubaya.cerbung.databinding.FragmentReadPublicBinding
 
 
-private const val ARG_CERBUNG_ID = "cerbung_id"
+private const val ARG_CERBUNG = "cerbung_id"
 
 
 
 class ReadPublicFragment : Fragment() {
-    private var cerbung_id: Int? = null
+    private var cerbung: Cerbung? = null
+    private lateinit var binding: FragmentReadPublicBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            cerbung_id = it.getInt(ARG_CERBUNG_ID)
-            Toast.makeText(context, "Cerbung ID: $cerbung_id", Toast.LENGTH_SHORT).show()
+            //cerbung_id = it.getInt(ARG_CERBUNG_ID)
+            cerbung = it.getParcelable(ARG_CERBUNG)
+            Toast.makeText(context, "Cerbung ID: ${cerbung!!.id}", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -28,15 +31,21 @@ class ReadPublicFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_read_public, container, false)
+        //return inflater.inflate(R.layout.fragment_read_public, container, false)
+        binding = FragmentReadPublicBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
     }
 
     companion object {
         @JvmStatic
-        fun newInstance(cerbung_id: Int) =
+        fun newInstance(cerbung: Cerbung) =
             ReadPublicFragment().apply {
                 arguments = Bundle().apply {
-                    putInt(ARG_CERBUNG_ID, cerbung_id)
+                    putParcelable(ARG_CERBUNG, cerbung)
                 }
             }
     }
