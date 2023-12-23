@@ -2,6 +2,7 @@ package com.nmpubaya.cerbung
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.nmpubaya.cerbung.databinding.ActivityHomeBinding
@@ -9,13 +10,18 @@ import com.nmpubaya.cerbung.databinding.ActivityHomeBinding
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding:ActivityHomeBinding
     private var fragment:ArrayList<Fragment> = arrayListOf()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val id = intent.getIntExtra(MainActivity.KEY_USER_ID, 0)
+        val username = intent.getStringExtra(MainActivity.KEY_USERNAME)
+        val num_follow = intent.getIntExtra(MainActivity.KEY_NUM_FOLLOWER, 0)
+
         fragment.add(HomeFragment())
-        fragment.add(FollowingFragment())
+        fragment.add(FollowingFragment.newInstance(id))
         fragment.add(CreateFragment())
         fragment.add(UsersFragment())
         fragment.add(PrefsFragment())
@@ -39,6 +45,5 @@ class HomeActivity : AppCompatActivity() {
             }
             true
         }
-
     }
 }
