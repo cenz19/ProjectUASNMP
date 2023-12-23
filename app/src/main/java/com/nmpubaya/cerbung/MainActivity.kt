@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
 
     fun cekLogin(username:String, password:String) {
         val q = Volley.newRequestQueue(this)
-        val url = "http://10.0.2.2/cerbungdb/get_user.php"
+        val url = "https://ubaya.me/native/160421005/get_user.php"
         val stringRequest = object : StringRequest(Request.Method.POST, url,
             {
                 Log.d("apiresult", it)
