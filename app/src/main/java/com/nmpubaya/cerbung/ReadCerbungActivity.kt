@@ -32,7 +32,6 @@ class ReadCerbungActivity : AppCompatActivity() {
                         val cerbung = Gson().fromJson(dataCerbung.toString(), sType) as Cerbung
                         if (cerbung.access == 1) {
                             val restrictedFragment = ReadRestrictedFragment.newInstance(cerbung)
-
                             supportFragmentManager?.beginTransaction()?.let {
                                 it.replace(R.id.container, restrictedFragment)
                                 it.addToBackStack(null)
