@@ -10,11 +10,9 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.nmpubaya.cerbung.databinding.ActivityReadCerbungBinding
 import org.json.JSONObject
 
 class ReadCerbungActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityReadCerbungBinding
 
     fun getAccessCerbung(cerbung_id: Int){
         val q = Volley.newRequestQueue(this)
@@ -32,17 +30,15 @@ class ReadCerbungActivity : AppCompatActivity() {
                         val cerbung = Gson().fromJson(dataCerbung.toString(), sType) as Cerbung
                         if (cerbung.access == 1) {
                             val restrictedFragment = ReadRestrictedFragment.newInstance(cerbung)
-                            supportFragmentManager.beginTransaction().let {
-                                it.replace(R.id.container, restrictedFragment)
-                                it.addToBackStack(null)
-                                it.commit()
+                            supportFragmentManager.beginTransaction().apply {
+                                add(R.id.container, restrictedFragment)
+                                commit()
                             }
                         } else {
                             val publicFragment = ReadPublicFragment.newInstance(cerbung)
-                            supportFragmentManager.beginTransaction().let {
-                                it.replace(R.id.container, publicFragment)
-                                it.addToBackStack(null)
-                                it.commit()
+                            supportFragmentManager.beginTransaction().apply {
+                                add(R.id.container, publicFragment)
+                                commit()
                             }
                         }
                     }
@@ -62,9 +58,8 @@ class ReadCerbungActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityReadCerbungBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        val cerbung_id = intent.getIntExtra(CerbungAdapter.KEY_CERBUNG_ID, 0)
-        getAccessCerbung(cerbung_id)
+        setContentView(R.layout.activity_read_cerbung)
+        val cerbungId = intent.getIntExtra(CerbungAdapter.KEY_CERBUNG_ID, 0)
+        getAccessCerbung(cerbungId)
     }
 }

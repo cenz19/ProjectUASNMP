@@ -20,7 +20,13 @@ class ReadRestrictedFragment : Fragment() {
         super.onCreate(savedInstanceState)
         arguments?.let {
             cerbung = it.getParcelable(ARG_CERBUNG)
-            Toast.makeText(context, "Cerbung ID: ${cerbung!!.id}", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        arguments?.let {
+            cerbung = it.getParcelable(ARG_CERBUNG)
         }
     }
 

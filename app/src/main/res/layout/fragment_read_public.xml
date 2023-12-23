@@ -122,7 +122,7 @@
                     app:layout_constraintTop_toBottomOf="@+id/imgCerbung" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerView"
+                    android:id="@+id/paragraphRecView"
                     android:layout_width="372dp"
                     android:layout_height="244dp"
                     android:layout_marginStart="16dp"
@@ -161,7 +161,7 @@
                     android:layout_marginEnd="16dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/recyclerView">
+                    app:layout_constraintTop_toBottomOf="@+id/paragraphRecView">
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/txtNewPar"
