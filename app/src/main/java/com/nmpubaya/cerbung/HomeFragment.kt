@@ -32,7 +32,7 @@ class HomeFragment : Fragment() {
     }
     fun reload(){
         val q = Volley.newRequestQueue(activity)
-        val url = "http://10.0.2.2/cerbungdb/get_all_cerbung.php"
+        val url = "https://ubaya.me/native/160421005/get_all_cerbung.php"
         var stringRequest = object: StringRequest(Request.Method.POST, url,
             {
                 Log.d("apiresult", it.toString())
