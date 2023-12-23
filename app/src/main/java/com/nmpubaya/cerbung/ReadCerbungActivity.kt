@@ -18,7 +18,7 @@ class ReadCerbungActivity : AppCompatActivity() {
 
     fun getAccessCerbung(cerbung_id: Int){
         val q = Volley.newRequestQueue(this)
-        val url = "http://10.0.2.2/cerbungdb/get_cerbung.php"
+        val url = "https://ubaya.me/native/160421005/get_cerbung.php"
         var stringRequest = object : StringRequest(
             Request.Method.POST, url,
             {
