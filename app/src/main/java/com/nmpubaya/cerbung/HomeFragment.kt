@@ -16,14 +16,14 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
 class HomeFragment : Fragment() {
-    
+
     var cerbungs: ArrayList<Cerbung> = arrayListOf()
     private lateinit var binding:FragmentHomeBinding
 
     fun updateList() {
         //Fungsi ini untuk setup adapter
         val lm = LinearLayoutManager(activity)
-        with(binding.playListRecView) {
+        with(binding.cerbungRecView) {
             layoutManager = lm
             setHasFixedSize(true)
             adapter = CerbungAdapter(cerbungs)
