@@ -11,7 +11,7 @@
 
     if (isset($_POST["id"])) {
         $id = $_POST["id"];
-        $sql = "SELECT * FROM cerbungs WHERE id=?";
+        $sql = "SELECT c.id, title, description, num_likes, access, num_paragraph, genre, url_gambar, waktu_dibuat, username FROM cerbungs c LEFT JOIN approval_cerbung ac ON c.id=ac.cerbung_id LEFT JOIN users u ON u.id=ac.author_id WHERE c.id=?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("i", $id);
         $stmt->execute();
