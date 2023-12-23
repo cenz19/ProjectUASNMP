@@ -19,7 +19,6 @@ class ReadRestrictedFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            //cerbung_id = it.getInt(ARG_CERBUNG_ID)
             cerbung = it.getParcelable(ARG_CERBUNG)
             Toast.makeText(context, "Cerbung ID: ${cerbung!!.id}", Toast.LENGTH_SHORT).show()
         }
@@ -40,7 +39,6 @@ class ReadRestrictedFragment : Fragment() {
     }
 
     companion object {
-
         @JvmStatic
         fun newInstance(cerbung : Cerbung) =
             ReadRestrictedFragment().apply {
