@@ -9,7 +9,7 @@ import android.widget.Toast
 import com.nmpubaya.cerbung.databinding.FragmentReadRestrictedBinding
 
 
-private const val ARG_CERBUNG = "cerbung_id"
+private const val ARG_CERBUNG = "cerbung"
 
 
 class ReadRestrictedFragment : Fragment() {
