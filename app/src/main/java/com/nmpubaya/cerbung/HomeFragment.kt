@@ -16,8 +16,8 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
 class HomeFragment : Fragment() {
-
-    var playlists:ArrayList<Cerbung> = arrayListOf()
+    
+    var cerbungs: ArrayList<Cerbung> = arrayListOf()
     private lateinit var binding:FragmentHomeBinding
 
     fun updateList() {
@@ -26,29 +26,31 @@ class HomeFragment : Fragment() {
         with(binding.playListRecView) {
             layoutManager = lm
             setHasFixedSize(true)
-            adapter = PlaylistAdapter(playlists)
+            adapter = CerbungAdapter(cerbungs)
         }
     }
     fun reload(){
         val q = Volley.newRequestQueue(activity)
-        val url = "https://ubaya.me/native/160421072/get_playlist.php"
-        //val url = "http://10.0.2.2/music_zd/get_playlist.php"
-        var stringRequest = StringRequest(
-            Request.Method.POST, url,
+        val url = "http://10.0.2.2/cerbungdb/get_all_cerbung.php"
+        var stringRequest = object: StringRequest(Request.Method.POST, url,
             {
                 Log.d("apiresult", it.toString())
                 val obj = JSONObject(it)
-                if(obj.getString("result") == "OK"){
+                if (obj.getString("result") == "OK") {
                     val data = obj.getJSONArray("data")
                     val sType = object : TypeToken<List<Cerbung>>() { }.type
-                    playlists = Gson().fromJson(data.toString(), sType) as ArrayList<Cerbung>
-                    Log.d("apiresult", playlists.toString())
+                    cerbungs = Gson().fromJson(data.toString(), sType) as ArrayList<Cerbung>
+                    Log.d("apiresult", cerbungs.toString())
                     updateList()
                 }
             },
             {
                 Log.e("apiresult", it.message.toString())
-            })
+            }) {
+            override fun getParams(): MutableMap<String, String>? {
+                return super.getParams()
+            }
+        }
         q.add(stringRequest)
     }
     override fun onCreate(savedInstanceState: Bundle?) {

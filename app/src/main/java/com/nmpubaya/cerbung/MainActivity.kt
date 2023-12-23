@@ -8,7 +8,6 @@ import android.widget.Toast
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.nmpubaya.cerbung.databinding.ActivityMainBinding
@@ -18,6 +17,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding:ActivityMainBinding
 
     companion object {
+        val KEY_USER_ID = "id"
         val KEY_USERNAME = "username"
         val KEY_NUM_FOLLOWER = "num_follower"
     }
@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity() {
                         val user = Gson().fromJson(dataUser.toString(), sType) as User
                         Toast.makeText(this,"Welcome ${user.username}", Toast.LENGTH_LONG).show()
                         val i = Intent(this, HomeActivity::class.java)
+                        i.putExtra(KEY_USER_ID, user.id)
                         i.putExtra(KEY_USERNAME, user.username)
                         i.putExtra(KEY_NUM_FOLLOWER, user.num_follower)
                         startActivity(i)

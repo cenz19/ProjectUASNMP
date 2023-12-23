@@ -1,5 +1,6 @@
 package com.nmpubaya.cerbung
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -14,6 +15,10 @@ class CerbungAdapter(val cerbungs: ArrayList<Cerbung>): RecyclerView.Adapter<Cer
         return CerbungViewHolder(binding)
     }
 
+    companion object {
+        val KEY_CERBUNG_ID = "cerbung_id"
+    }
+
     override fun getItemCount(): Int {
         return cerbungs.size
     }
@@ -21,17 +26,20 @@ class CerbungAdapter(val cerbungs: ArrayList<Cerbung>): RecyclerView.Adapter<Cer
     override fun onBindViewHolder(holder: CerbungViewHolder, position: Int) {
         with (holder.binding) {
             var url = cerbungs[position].url_gambar
-            var buider = Picasso.Builder(holder.itemView.context)
-            buider.listener {picasso, uri, exception -> exception.printStackTrace()}
+            var builder = Picasso.Builder(holder.itemView.context)
+            builder.listener {picasso, uri, exception -> exception.printStackTrace()}
             Picasso.get().load(url).into(imgCerbung)
 
             txtTitleCerbung.text = cerbungs[position].title
-            txtAuthorCerbung.text = "by ${cerbungs[position].username}"
+            txtAuthorCerbung.text = "by " + cerbungs[position].username
             txtNumParagraph.text = cerbungs[position].num_paragraph.toString()
             txtNumLike.text = cerbungs[position].num_likes.toString()
             txtDeskripsi.text = cerbungs[position].description
             btnRead.setOnClickListener {
-
+                val id = cerbungs[position].id
+                val intent = Intent(it.context, ReadCerbungActivity::class.java)
+                intent.putExtra(KEY_CERBUNG_ID, id)
+                it.context.startActivity(intent)
             }
         }
     }
