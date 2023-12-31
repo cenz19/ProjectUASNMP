@@ -25,7 +25,7 @@ class HomeActivity : AppCompatActivity() {
 
         fragment.add(HomeFragment())
         fragment.add(FollowingFragment.newInstance(id))
-        fragment.add(CreateFragment())
+        fragment.add(CreateFragment.newInstance(id))
         fragment.add(UsersFragment())
         fragment.add(PrefsFragment())
 
