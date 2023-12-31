@@ -60,11 +60,13 @@ CREATE TABLE `cerbungs` (
   `description` varchar(1000) NOT NULL,
   `num_likes` int(11) NOT NULL,
   `access` tinyint(4) NOT NULL,
+  `genre_id` int(11) NOT NULL,
   `num_paragraph` int(11) NOT NULL,
-  `genre` varchar(45) NOT NULL,
   `url_gambar` varchar(45) NOT NULL,
   `waktu_dibuat` date NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `fk_cerbungs_genre1_idx` (`genre_id`),
+  CONSTRAINT `fk_cerbungs_genre1` FOREIGN KEY (`genre_id`) REFERENCES `genre` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -74,7 +76,7 @@ CREATE TABLE `cerbungs` (
 
 LOCK TABLES `cerbungs` WRITE;
 /*!40000 ALTER TABLE `cerbungs` DISABLE KEYS */;
-INSERT INTO `cerbungs` VALUES (1,'Halo','Halo',12,1,3,'Aksi','https://picsum.photos/200','2023-01-01'),(2,'Test','Test',20,2,4,'Horor','https://picsum.photos/200','2023-02-01');
+INSERT INTO `cerbungs` VALUES (1,'Halo','Halo',12,1,1,3,'https://picsum.photos/200','2023-01-01'),(2,'Test','Test',20,2,2,4,'https://picsum.photos/200','2023-02-01');
 /*!40000 ALTER TABLE `cerbungs` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -133,6 +135,30 @@ CREATE TABLE `following` (
 LOCK TABLES `following` WRITE;
 /*!40000 ALTER TABLE `following` DISABLE KEYS */;
 /*!40000 ALTER TABLE `following` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `genre`
+--
+
+DROP TABLE IF EXISTS `genre`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `genre` (
+  `id` int(11) NOT NULL,
+  `nama` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `genre`
+--
+
+LOCK TABLES `genre` WRITE;
+/*!40000 ALTER TABLE `genre` DISABLE KEYS */;
+INSERT INTO `genre` VALUES (1,'Aksi'),(2,'Misteri');
+/*!40000 ALTER TABLE `genre` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -203,6 +229,7 @@ CREATE TABLE `users` (
   `username` varchar(45) NOT NULL,
   `password` varchar(128) NOT NULL,
   `num_follower` varchar(45) NOT NULL,
+  `url_profile` varchar(45) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -213,7 +240,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'bayu','bayu','0'),(2,'vincen','vincent','0'),(3,'feli','feli','0'),(4,'andre','andre','0');
+INSERT INTO `users` VALUES (1,'bayu','bayu','0','https://picsum.photos/200'),(2,'vincen','vincent','0','https://picsum.photos/200'),(3,'feli','feli','0','https://picsum.photos/200'),(4,'andre','andre','0','https://picsum.photos/200');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -226,4 +253,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-23 12:00:49
+-- Dump completed on 2023-12-31  7:48:57

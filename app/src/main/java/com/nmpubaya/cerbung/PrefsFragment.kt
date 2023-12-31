@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDelegate
 import com.nmpubaya.cerbung.databinding.FragmentPrefsBinding
+import com.squareup.picasso.Picasso
 
 class PrefsFragment : Fragment() {
     private lateinit var binding: FragmentPrefsBinding
@@ -34,11 +35,19 @@ class PrefsFragment : Fragment() {
         val sharedPreferences = activity?.getSharedPreferences(sharedFile, Context.MODE_PRIVATE)
         val editor = sharedPreferences?.edit()
         val nightMode = sharedPreferences?.getBoolean("night", false)
+        val username = sharedPreferences?.getString(MainActivity.KEY_USERNAME, "")
+        val url_profile = sharedPreferences?.getString(MainActivity.KEY_URL_PROFILE, "")
 
         if (nightMode == true) {
             binding.switchDarkMode.isChecked = true
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         }
+
+        var builder = Picasso.Builder(view.context)
+        builder.listener { picasso, uri, exception ->  exception.printStackTrace()}
+        Picasso.get().load(url_profile).into(binding.imgProfile)
+
+        binding.txtUsernamePref.setText(username)
 
         binding.switchDarkMode.setOnCheckedChangeListener { buttonView, isChecked ->
             if (!isChecked) {

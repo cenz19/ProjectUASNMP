@@ -1,5 +1,6 @@
 package com.nmpubaya.cerbung
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -28,6 +29,13 @@ class FollowCerbungAdapter(val cerbungs: ArrayList<Cerbung>): RecyclerView.Adapt
             txtTitle.text = cerbungs[position].title
             txtAuthor.text = "by " + cerbungs[position].username
             txtLastUpdate.text = "Last update: " + cerbungs[position].waktu_dibuat
+
+            cardViewFollow.setOnClickListener {
+                val id = cerbungs[position].id
+                val intent = Intent(it.context, ReadCerbungActivity::class.java)
+                intent.putExtra(CerbungAdapter.KEY_CERBUNG_ID, id)
+                it.context.startActivity(intent)
+            }
         }
     }
 }

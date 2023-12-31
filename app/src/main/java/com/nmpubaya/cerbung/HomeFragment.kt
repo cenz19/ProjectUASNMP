@@ -41,7 +41,6 @@ class HomeFragment : Fragment() {
                     val data = obj.getJSONArray("data")
                     val sType = object : TypeToken<List<Cerbung>>() { }.type
                     cerbungs = Gson().fromJson(data.toString(), sType) as ArrayList<Cerbung>
-                    Log.d("apiresult", cerbungs.toString())
                     updateList()
                 }
             },

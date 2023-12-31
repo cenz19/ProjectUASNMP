@@ -1,5 +1,6 @@
 package com.nmpubaya.cerbung
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -16,9 +17,11 @@ class HomeActivity : AppCompatActivity() {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val id = intent.getIntExtra(MainActivity.KEY_USER_ID, 0)
-        val username = intent.getStringExtra(MainActivity.KEY_USERNAME)
-        val num_follow = intent.getIntExtra(MainActivity.KEY_NUM_FOLLOWER, 0)
+        val sharedFile = "com.nmpubaya.cerbung"
+        val sharedPreferences = getSharedPreferences(sharedFile, Context.MODE_PRIVATE)
+        val id = sharedPreferences.getInt(MainActivity.KEY_USER_ID, 0)
+        val username = sharedPreferences.getString(MainActivity.KEY_USERNAME, "")
+        val num_follower = sharedPreferences.getInt(MainActivity.KEY_NUM_FOLLOWER, 0)
 
         fragment.add(HomeFragment())
         fragment.add(FollowingFragment.newInstance(id))

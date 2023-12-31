@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.nmpubaya.cerbung.databinding.FragmentReadPublicBinding
+import com.squareup.picasso.Picasso
 
 
 private const val ARG_CERBUNG = "cerbung"
@@ -43,6 +44,20 @@ class ReadPublicFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        with (binding) {
+            var url = cerbung?.url_gambar
+            var builder = Picasso.Builder(view.context)
+            builder.listener { picasso, uri, exception ->  exception.printStackTrace()}
+            Picasso.get().load(url).into(imgCerbung)
+            txtJudul.text = cerbung?.title
+            txtListCount.text = cerbung?.num_paragraph.toString()
+            txtLikeCount.text  = cerbung?.num_likes.toString()
+            txtCreator.text = cerbung?.username
+            txtDateCreated.text = cerbung?.waktu_dibuat
+            txtGenre.text = cerbung?.genre
+
+        }
     }
 
     companion object {

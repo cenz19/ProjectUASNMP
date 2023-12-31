@@ -1,5 +1,7 @@
 package com.nmpubaya.cerbung
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -15,7 +17,7 @@ import org.json.JSONObject
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding:ActivityRegisterBinding
 
-    fun register(username:String, password:String, regPass:String) {
+    fun register(username:String, password:String, regPass:String, urlProfile:String) {
         val q = Volley.newRequestQueue(this)
         val url = "https://ubaya.me/native/160421005/get_user.php"
         val stringRequest = object : StringRequest(Request.Method.POST, url,
@@ -27,15 +29,23 @@ class RegisterActivity : AppCompatActivity() {
                         val regUrl = "https://ubaya.me/native/160421005/create_user.php"
                         val regStrRequest = object : StringRequest(Request.Method.POST, regUrl,
                             {
-                                Toast.makeText(this, "Thanks for registering\nPlease login with your new account",
-                                    Toast.LENGTH_LONG).show()
-                                val i = Intent(this, MainActivity::class.java)
-                                startActivity(i)
-                                finish()
+                                val dialog = AlertDialog.Builder(this)
+                                dialog.setMessage("Thanks for registering\nPlease login with your new account")
+                                dialog.setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which ->
+                                    val i = Intent(this, MainActivity::class.java)
+                                    startActivity(i)
+                                    finish()
+                                })
+                                dialog.create().show()
                             },
                             {
                                 Log.e("apiresult", it.printStackTrace().toString())
-                                Toast.makeText(this, "Failed to register", Toast.LENGTH_LONG).show()
+                                val dialog = AlertDialog.Builder(this)
+                                dialog.setMessage("Failed to register")
+                                dialog.setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which ->
+                                    dialog.dismiss()
+                                })
+                                dialog.create().show()
                             }
                         ) {
                             override fun getParams(): MutableMap<String, String>? {
@@ -43,15 +53,26 @@ class RegisterActivity : AppCompatActivity() {
                                 params["username"] = username
                                 params["password"] = password
                                 params["num_follower"] = "0"
+                                params["url_profile"] = urlProfile
                                 return params
                             }
                         }
                         q.add(regStrRequest)
                     } else {
-                        Toast.makeText(this, "Password doesn't match", Toast.LENGTH_LONG).show()
+                        val dialog = AlertDialog.Builder(this)
+                        dialog.setMessage("Password doesn't match")
+                        dialog.setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which ->
+                            dialog.dismiss()
+                        })
+                        dialog.create().show()
                     }
                 } else if (obj.getString("result") == "OK") {
-                    Toast.makeText(this, "Username already exists", Toast.LENGTH_LONG).show()
+                    val dialog = AlertDialog.Builder(this)
+                    dialog.setMessage("Username already exists")
+                    dialog.setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which ->
+                        dialog.dismiss()
+                    })
+                    dialog.create().show()
                 }
             },
             {
@@ -76,7 +97,8 @@ class RegisterActivity : AppCompatActivity() {
             val username = binding.txtUsernameRegister.text.toString()
             val password = binding.txtPasswordRegister.text.toString()
             val regPass = binding.txtRepeatPasswordRegister.text.toString()
-            register(username, password, regPass)
+            val url_profile = binding.txtProfilePic.text.toString()
+            register(username, password, regPass, url_profile)
         }
 
         binding.btnCancel.setOnClickListener {

@@ -11,5 +11,12 @@ class CreateCerbung1Activity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityCreateCerbung1Binding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.btnNext1.setOnClickListener {
+            val title = binding.txtCerbungTitle.text.toString()
+            val desc = binding.txtShortDescription.text.toString()
+            val img_cover = binding.txtCerbungImageCover.text.toString()
+
+        }
     }
 }
