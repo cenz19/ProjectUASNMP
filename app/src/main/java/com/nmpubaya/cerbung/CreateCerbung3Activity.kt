@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
@@ -14,43 +15,6 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 class CreateCerbung3Activity : AppCompatActivity() {
-    fun insertAndPublishCerbung(id: Int, title: String, desc: String, img_cover: String,
-                                genre_id: Int, access: Int, first_paragraph: String) {
-        val q = Volley.newRequestQueue(this)
-        val url = "https://ubaya.me/native/160421005/create_cerbung.php"
-        val stringRequest = object : StringRequest(Request.Method.POST, url,
-            {
-                Log.d("apiresult", it.toString())
-                val obj = JSONObject(it)
-                if (obj.getString("result") == "OK") {
-                    val msg = obj.getJSONArray("msg")
-                    Log.d("apiresult", msg.toString())
-                } else {
-                    Log.e("apiresult", it.toString())
-                }
-            },
-            {
-                Log.e("apiresult", it.printStackTrace().toString())
-                Log.e("apiresult", it.message.toString())
-            }) {
-            override fun getParams(): MutableMap<String, String>? {
-                val params = HashMap<String, String>()
-                params["title"] = title
-                params["description"] = desc
-                params["num_likes"] = "0"
-                params["access"] = access.toString()
-                params["genre_id"] = genre_id.toString()
-                params["num_paragraph"] = "0"
-                params["url_gambar"] = img_cover
-//                val date = LocalDateTime.now()
-//                val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
-//                params["waktu_dibuat"] = date.format(formatter)
-                params["users_id"] = id.toString()
-                return params
-            }
-        }
-        q.add(stringRequest)
-    }
     private lateinit var binding: ActivityCreateCerbung3Binding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,19 +38,13 @@ class CreateCerbung3Activity : AppCompatActivity() {
         }
         binding.txtFirstParagraphCreateCerbung3.text = first_paragraph
 
+        binding.btnPrev3.setOnClickListener {
+            val i = Intent(this, CreateCerbung2Activity::class.java)
+            startActivity(i)
+        }
+
         binding.btnPublish3.setOnClickListener {
-            if (binding.checkBox.isChecked) {
-                val new_title = binding.txtTitleCreateCerbung3.text.toString()
-                val new_desc = binding.txtShortDescriptionCreateCerbung3.text.toString()
-                val new_img_cover = img_cover
-                val new_genre_id = genre_id
-                val new_access = access
-                val new_first_paragraph = binding.txtFirstParagraphCreateCerbung3.text.toString()
-                val new_id = id
-                if (new_title != null && new_desc != null && new_img_cover != null && new_first_paragraph != null) {
-                    insertAndPublishCerbung(new_id, new_title, new_desc, new_img_cover, new_genre_id, new_access, new_first_paragraph)
-                }
-            }
+            Toast.makeText(this, "ID:$id, Title:$title, Desc:$desc, Img:$img_cover, Genre:$genre_id, access:$access, first:$first_paragraph", Toast.LENGTH_LONG).show()
         }
     }
 }

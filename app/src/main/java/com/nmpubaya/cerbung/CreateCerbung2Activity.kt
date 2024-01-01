@@ -21,8 +21,18 @@ class CreateCerbung2Activity : AppCompatActivity() {
         val desc = intent.getStringExtra(CreateCerbung1Activity.KEY_DESC)
         val img_cover = intent.getStringExtra(CreateCerbung1Activity.KEY_IMG_COVER)
         val genre_id = intent.getIntExtra(CreateCerbung1Activity.KEY_GENRE_ID, 0)
+        var access = intent.getIntExtra(KEY_ACCESS, 0)
+        var first_par = intent.getStringExtra(KEY_FIRST_PARAGRAPH)
 
-        var access = 0
+        if (access == 1) {
+            binding.radioBtnRestricted.isChecked = true
+            binding.radioBtnPublic.isChecked = false
+        } else {
+            binding.radioBtnPublic.isChecked = true
+            binding.radioBtnRestricted.isChecked = false
+        }
+
+        binding.txtWriteFirstParagraph.setText(first_par)
 
         binding.radioGroupAccess.setOnCheckedChangeListener { group, checkedId ->
             if (checkedId == R.id.radioBtnRestricted) {
