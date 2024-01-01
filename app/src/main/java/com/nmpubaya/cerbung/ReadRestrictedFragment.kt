@@ -91,7 +91,7 @@ class ReadRestrictedFragment : Fragment() {
             Picasso.get().load(url).into(imgCerbung)
             txtJudul.text = cerbung?.title
             txtListCount.text = cerbung?.num_paragraph.toString()
-            txtLikeCount.text  = cerbung?.num_likes.toString()
+            txtLikeCount.text = cerbung?.num_likes.toString()
             txtCreator.text = cerbung?.username
             txtDateCreated.text = cerbung?.waktu_dibuat
             txtGenre.text = cerbung?.genre
