@@ -13,6 +13,7 @@ data class Cerbung(var id:Int,
                    var genre: String,
                    var url_gambar:String,
                    var waktu_dibuat: String,
+                   var users_id: Int,
                    var username: String
                    ) : Parcelable
 {

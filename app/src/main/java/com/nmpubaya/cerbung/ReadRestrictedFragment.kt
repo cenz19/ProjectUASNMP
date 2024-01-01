@@ -1,13 +1,20 @@
 package com.nmpubaya.cerbung
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.android.volley.Request
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
 import com.nmpubaya.cerbung.databinding.FragmentReadRestrictedBinding
 import com.squareup.picasso.Picasso
+import org.json.JSONObject
 
 
 private const val ARG_CERBUNG = "cerbung"
@@ -41,6 +48,44 @@ class ReadRestrictedFragment : Fragment() {
         return binding.root
     }
 
+    fun followCerbung(cerbung_id: Int, users_id: Int, is_follow: Int) {
+        val q = Volley.newRequestQueue(activity)
+        val url = "https://ubaya.me/native/160421005/create_follow_cerbung.php"
+        val dialog = AlertDialog.Builder(activity)
+        val stringRequest = object : StringRequest(
+            Request.Method.POST, url,
+            {
+                Log.d("apiresult", it)
+                val obj = JSONObject(it)
+                if (obj.getString("result") == "OK") {
+                    dialog.setMessage("Successfully add cerbung to follow")
+                    dialog.setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which ->
+                        dialog.dismiss()
+                    })
+                    dialog.create().show()
+                } else {
+                    dialog.setMessage("Failed to add cerbung to follow")
+                    dialog.setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which ->
+                        dialog.dismiss()
+                    })
+                    dialog.create().show()
+                }
+            },
+            {
+                Log.e("apiresult", it.message.toString())
+            }
+        ) {
+            override fun getParams(): MutableMap<String, String>? {
+                val params = HashMap<String, String>()
+                params["cerbung_id"] = cerbung_id.toString()
+                params["users_id"] = users_id.toString()
+                params["is_follow"] = is_follow.toString()
+                return params
+            }
+        }
+        q.add(stringRequest)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -55,6 +100,10 @@ class ReadRestrictedFragment : Fragment() {
             txtCreator.text = cerbung?.username
             txtDateCreated.text = cerbung?.waktu_dibuat
             txtGenre.text = cerbung?.genre
+
+            btnFollow.setOnClickListener {
+                followCerbung(cerbung!!.id, cerbung!!.users_id, 1)
+            }
         }
     }
 

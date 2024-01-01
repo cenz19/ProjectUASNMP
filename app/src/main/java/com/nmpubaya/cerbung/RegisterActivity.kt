@@ -29,6 +29,7 @@ class RegisterActivity : AppCompatActivity() {
                         val regUrl = "https://ubaya.me/native/160421005/create_user.php"
                         val regStrRequest = object : StringRequest(Request.Method.POST, regUrl,
                             {
+                                Log.d("apiresult", it)
                                 val dialog = AlertDialog.Builder(this)
                                 dialog.setMessage("Thanks for registering\nPlease login with your new account")
                                 dialog.setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which ->
