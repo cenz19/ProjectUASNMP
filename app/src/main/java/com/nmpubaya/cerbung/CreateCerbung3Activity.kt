@@ -32,7 +32,7 @@ class CreateCerbung3Activity : AppCompatActivity() {
                 Log.d("apiresult", it)
             },
             {
-                Log.e("apiresult", it.message.toString())
+                Log.e("apiresult", it.printStackTrace().toString())
             }
         ) {
             override fun getParams(): MutableMap<String, String>? {
@@ -95,6 +95,8 @@ class CreateCerbung3Activity : AppCompatActivity() {
                 Toast.makeText(this, "$id, $title, $desc, $img_cover, ${genre?.id}, $access, $first_paragraph, $waktu_dibuat", Toast.LENGTH_LONG).show()
                 if (title != null && desc != null && img_cover != null && first_paragraph != null) {
                     insertAndPublishCerbung(title, desc, img_cover, genre!!.id, access, first_paragraph, id, waktu_dibuat)
+                } else {
+                    Toast.makeText(this, "Null object", Toast.LENGTH_LONG).show()
                 }
             } else {
                 val dialog = AlertDialog.Builder(this)
