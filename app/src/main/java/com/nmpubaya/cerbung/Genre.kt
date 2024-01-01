@@ -1,6 +1,10 @@
 package com.nmpubaya.cerbung
 
-class Genre(val id: Int, val nama: String) {
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
+class Genre(val id: Int, val nama: String) : Parcelable {
     override fun toString(): String {
         return nama
     }

@@ -23,7 +23,7 @@ class CreateCerbung1Activity : AppCompatActivity() {
         val KEY_TITLE = "title"
         val KEY_DESC = "desc"
         val KEY_IMG_COVER = "img_cover"
-        val KEY_GENRE_ID = "genre_id"
+        val KEY_GENRE = "genre"
     }
 
     fun getDataPage1(id: Int) {
@@ -47,14 +47,13 @@ class CreateCerbung1Activity : AppCompatActivity() {
                         val desc = binding.txtShortDescription.text.toString()
                         val img_cover = binding.txtCerbungImageCover.text.toString()
                         val genre = binding.spinner.selectedItem as Genre
-                        val genre_id = genre.id
 
                         val i = Intent(this, CreateCerbung2Activity::class.java)
                         i.putExtra(KEY_ID, id)
                         i.putExtra(KEY_TITLE, title)
                         i.putExtra(KEY_DESC, desc)
                         i.putExtra(KEY_IMG_COVER, img_cover)
-                        i.putExtra(KEY_GENRE_ID, genre_id)
+                        i.putExtra(KEY_GENRE, genre)
                         startActivity(i)
                     }
                 }
