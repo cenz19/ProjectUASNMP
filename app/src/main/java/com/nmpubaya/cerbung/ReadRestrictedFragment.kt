@@ -52,27 +52,22 @@ class ReadRestrictedFragment : Fragment() {
         val q = Volley.newRequestQueue(activity)
         val url = "https://ubaya.me/native/160421005/create_follow_cerbung.php"
         val dialog = AlertDialog.Builder(activity)
-        val stringRequest = object : StringRequest(
-            Request.Method.POST, url,
+        val stringRequest = object : StringRequest(Request.Method.POST, url,
             {
                 Log.d("apiresult", it)
-                val obj = JSONObject(it)
-                if (obj.getString("result") == "OK") {
-                    dialog.setMessage("Successfully add cerbung to follow")
-                    dialog.setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which ->
-                        dialog.dismiss()
-                    })
-                    dialog.create().show()
-                } else {
-                    dialog.setMessage("Failed to add cerbung to follow")
-                    dialog.setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which ->
-                        dialog.dismiss()
-                    })
-                    dialog.create().show()
-                }
+                dialog.setMessage("Successfully add cerbung to follow")
+                dialog.setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which ->
+                    dialog.dismiss()
+                })
+                dialog.create().show()
             },
             {
                 Log.e("apiresult", it.message.toString())
+                dialog.setMessage("Failed to add cerbung to follow")
+                dialog.setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which ->
+                    dialog.dismiss()
+                })
+                dialog.create().show()
             }
         ) {
             override fun getParams(): MutableMap<String, String>? {
