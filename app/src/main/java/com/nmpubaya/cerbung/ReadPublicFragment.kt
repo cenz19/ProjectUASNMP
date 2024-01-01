@@ -56,21 +56,17 @@ class ReadPublicFragment : Fragment() {
         val stringRequest = object : StringRequest(Request.Method.POST, url,
             {
                 Log.d("apiresult", it)
-                val obj = JSONObject(it)
-                if (obj.getString("result") == "OK") {
-                    dialog.setMessage("Successfully add cerbung to follow")
-                    dialog.setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which ->
-                        dialog.dismiss()
-                    })
-                } else {
-                    dialog.setMessage("Failed to add cerbung to follow")
-                    dialog.setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which ->
-                        dialog.dismiss()
-                    })
-                }
+                dialog.setMessage("Successfully add cerbung to follow")
+                dialog.setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which ->
+                    dialog.dismiss()
+                })
             },
             {
                 Log.e("apiresult", it.message.toString())
+                dialog.setMessage("Failed to add cerbung to follow")
+                dialog.setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which ->
+                    dialog.dismiss()
+                })
             }
         ) {
             override fun getParams(): MutableMap<String, String>? {
