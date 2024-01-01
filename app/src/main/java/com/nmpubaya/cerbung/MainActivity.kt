@@ -53,7 +53,6 @@ class MainActivity : AppCompatActivity() {
                         dialog.setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which ->
                             editor.putInt(KEY_USER_ID, user.id)
                             editor.putString(KEY_USERNAME, user.username)
-                            editor.putInt(KEY_NUM_FOLLOWER, user.num_follower)
                             editor.putString(KEY_URL_PROFILE, user.url_profile)
                             editor.apply()
                             val i = Intent(this, HomeActivity::class.java)

@@ -52,7 +52,6 @@ class RegisterActivity : AppCompatActivity() {
                                 val params = HashMap<String, String>()
                                 params["username"] = username
                                 params["password"] = password
-                                params["num_follower"] = "0"
                                 params["url_profile"] = urlProfile
                                 return params
                             }

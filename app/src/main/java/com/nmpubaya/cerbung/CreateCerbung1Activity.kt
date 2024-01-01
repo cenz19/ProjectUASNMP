@@ -28,8 +28,8 @@ class CreateCerbung1Activity : AppCompatActivity() {
 
     fun getDataPage1(id: Int) {
         val q = Volley.newRequestQueue(this)
-        val url = "http://10.0.2.2/cerbungdb/get_all_genre.php"
-        val stringRequest = StringRequest(Request.Method.POST, url,
+        val url = "https://ubaya.me/native/160421005/get_all_genre.php"
+        val stringRequest = object : StringRequest(Request.Method.POST, url,
             {
                 Log.d("apiresult", it.toString())
                 val obj = JSONObject(it)
@@ -62,7 +62,11 @@ class CreateCerbung1Activity : AppCompatActivity() {
             {
                 Log.e("apiresult", it.message.toString())
             }
-        )
+        ) {
+            override fun getParams(): MutableMap<String, String>? {
+                return super.getParams()
+            }
+        }
         q.add(stringRequest)
 
     }

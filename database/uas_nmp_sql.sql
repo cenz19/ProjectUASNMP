@@ -2,7 +2,7 @@
 --
 -- Host: 127.0.0.1    Database: mydb
 -- ------------------------------------------------------
--- Server version	5.5.5-10.4.32-MariaDB
+-- Server version	5.5.5-10.4.22-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -25,8 +25,8 @@ DROP TABLE IF EXISTS `approval_cerbung`;
 CREATE TABLE `approval_cerbung` (
   `cerbung_id` int(11) NOT NULL,
   `author_id` int(11) NOT NULL,
-  `status_approval` tinyint(4) NOT NULL,
   `notifications_id` int(11) NOT NULL,
+  `status_approval` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`cerbung_id`,`author_id`),
   KEY `fk_cerbung_author_author1_idx` (`author_id`),
   KEY `fk_cerbung_author_cerbung1_idx` (`cerbung_id`),
@@ -34,7 +34,7 @@ CREATE TABLE `approval_cerbung` (
   CONSTRAINT `fk_cerbung_author_author1` FOREIGN KEY (`author_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_cerbung_author_cerbung1` FOREIGN KEY (`cerbung_id`) REFERENCES `cerbungs` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_cerbung_status_notifications1` FOREIGN KEY (`notifications_id`) REFERENCES `notifications` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,7 +43,6 @@ CREATE TABLE `approval_cerbung` (
 
 LOCK TABLES `approval_cerbung` WRITE;
 /*!40000 ALTER TABLE `approval_cerbung` DISABLE KEYS */;
-INSERT INTO `approval_cerbung` VALUES (1,1,1,1),(2,1,0,1);
 /*!40000 ALTER TABLE `approval_cerbung` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -56,18 +55,21 @@ DROP TABLE IF EXISTS `cerbungs`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `cerbungs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(45) NOT NULL,
-  `description` varchar(1000) NOT NULL,
-  `num_likes` int(11) NOT NULL,
-  `access` tinyint(4) NOT NULL,
+  `title` varchar(45) DEFAULT NULL,
+  `description` varchar(1000) DEFAULT NULL,
+  `num_likes` int(11) DEFAULT NULL,
+  `access` tinyint(4) DEFAULT NULL,
   `genre_id` int(11) NOT NULL,
-  `num_paragraph` int(11) NOT NULL,
-  `url_gambar` varchar(45) NOT NULL,
-  `waktu_dibuat` date NOT NULL,
+  `num_paragraph` int(11) DEFAULT NULL,
+  `url_gambar` varchar(45) DEFAULT NULL,
+  `waktu_dibuat` date DEFAULT NULL,
+  `users_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_cerbungs_genre1_idx` (`genre_id`),
-  CONSTRAINT `fk_cerbungs_genre1` FOREIGN KEY (`genre_id`) REFERENCES `genre` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+  KEY `fk_cerbungs_users1_idx` (`users_id`),
+  CONSTRAINT `fk_cerbungs_genre1` FOREIGN KEY (`genre_id`) REFERENCES `genre` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_cerbungs_users1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -76,7 +78,7 @@ CREATE TABLE `cerbungs` (
 
 LOCK TABLES `cerbungs` WRITE;
 /*!40000 ALTER TABLE `cerbungs` DISABLE KEYS */;
-INSERT INTO `cerbungs` VALUES (1,'Halo','Halo',12,1,1,3,'https://picsum.photos/200','2023-01-01'),(2,'Test','Test',20,2,2,4,'https://picsum.photos/200','2023-02-01');
+INSERT INTO `cerbungs` VALUES (1,'Halo','Halo',0,1,1,0,'https://picsum.photos/200','2023-01-01',1),(2,'Test','Test',0,2,2,0,'https://picsum.photos/200','2023-02-01',2);
 /*!40000 ALTER TABLE `cerbungs` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -90,13 +92,13 @@ DROP TABLE IF EXISTS `follow_cerbung`;
 CREATE TABLE `follow_cerbung` (
   `cerbungs_id` int(11) NOT NULL,
   `users_id` int(11) NOT NULL,
-  `is_follow` tinyint(4) NOT NULL,
+  `is_follow` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`cerbungs_id`,`users_id`),
   KEY `fk_cerbungs_users_users1_idx` (`users_id`),
   KEY `fk_cerbungs_users_cerbungs1_idx` (`cerbungs_id`),
   CONSTRAINT `fk_cerbungs_users_cerbungs1` FOREIGN KEY (`cerbungs_id`) REFERENCES `cerbungs` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_cerbungs_users_users1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -119,13 +121,13 @@ DROP TABLE IF EXISTS `following`;
 CREATE TABLE `following` (
   `users_id_1` int(11) NOT NULL,
   `users_id_2` int(11) NOT NULL,
-  `is_following` tinyint(4) NOT NULL,
+  `is_following` tinyint(4) DEFAULT NULL,
   PRIMARY KEY (`users_id_1`,`users_id_2`),
   KEY `fk_users_users_users2_idx` (`users_id_2`),
   KEY `fk_users_users_users1_idx` (`users_id_1`),
   CONSTRAINT `fk_users_users_users1` FOREIGN KEY (`users_id_1`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_users_users_users2` FOREIGN KEY (`users_id_2`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -146,9 +148,9 @@ DROP TABLE IF EXISTS `genre`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `genre` (
   `id` int(11) NOT NULL,
-  `nama` varchar(45) NOT NULL,
+  `nama` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -170,10 +172,10 @@ DROP TABLE IF EXISTS `notifications`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `notifications` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `waktu_notif` date NOT NULL,
-  `isi_notif` varchar(45) NOT NULL,
+  `waktu_notif` date DEFAULT NULL,
+  `isi_notif` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -182,8 +184,35 @@ CREATE TABLE `notifications` (
 
 LOCK TABLES `notifications` WRITE;
 /*!40000 ALTER TABLE `notifications` DISABLE KEYS */;
-INSERT INTO `notifications` VALUES (1,'2023-01-01','Halo');
 /*!40000 ALTER TABLE `notifications` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `paragraph_like`
+--
+
+DROP TABLE IF EXISTS `paragraph_like`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `paragraph_like` (
+  `users_id` int(11) NOT NULL,
+  `paragraphs_id` int(11) NOT NULL,
+  `is_like` tinyint(4) DEFAULT NULL,
+  PRIMARY KEY (`users_id`,`paragraphs_id`),
+  KEY `fk_users_has_paragraphs_paragraphs1_idx` (`paragraphs_id`),
+  KEY `fk_users_has_paragraphs_users1_idx` (`users_id`),
+  CONSTRAINT `fk_users_has_paragraphs_paragraphs1` FOREIGN KEY (`paragraphs_id`) REFERENCES `paragraphs` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_users_has_paragraphs_users1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `paragraph_like`
+--
+
+LOCK TABLES `paragraph_like` WRITE;
+/*!40000 ALTER TABLE `paragraph_like` DISABLE KEYS */;
+/*!40000 ALTER TABLE `paragraph_like` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -195,17 +224,16 @@ DROP TABLE IF EXISTS `paragraphs`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `paragraphs` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `isi` varchar(100) NOT NULL,
-  `num_like` varchar(45) NOT NULL,
-  `waktu_buat` date NOT NULL,
+  `isi` varchar(100) DEFAULT NULL,
+  `waktu_buat` date DEFAULT NULL,
   `cerbung_id` int(11) NOT NULL,
-  `author_id` int(11) NOT NULL,
+  `users_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_paragraf_cerbung_idx` (`cerbung_id`),
-  KEY `fk_paragraf_author1_idx` (`author_id`),
-  CONSTRAINT `fk_paragraf_author1` FOREIGN KEY (`author_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  KEY `fk_paragraf_author1_idx` (`users_id`),
+  CONSTRAINT `fk_paragraf_author1` FOREIGN KEY (`users_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `fk_paragraf_cerbung` FOREIGN KEY (`cerbung_id`) REFERENCES `cerbungs` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -226,12 +254,11 @@ DROP TABLE IF EXISTS `users`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(45) NOT NULL,
-  `password` varchar(128) NOT NULL,
-  `num_follower` varchar(45) NOT NULL,
-  `url_profile` varchar(45) NOT NULL,
+  `username` varchar(45) DEFAULT NULL,
+  `password` varchar(128) DEFAULT NULL,
+  `url_profile` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -240,7 +267,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'bayu','bayu','0','https://picsum.photos/200'),(2,'vincen','vincent','0','https://picsum.photos/200'),(3,'feli','feli','0','https://picsum.photos/200'),(4,'andre','andre','0','https://picsum.photos/200');
+INSERT INTO `users` VALUES (1,'bayu','bayu','https://picsum.photos/200'),(2,'vincen','vincent','https://picsum.photos/200'),(3,'feli','feli','https://picsum.photos/200'),(4,'andre','andre','https://picsum.photos/200');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -253,4 +280,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-12-31  7:48:57
+-- Dump completed on 2024-01-01  7:07:28
