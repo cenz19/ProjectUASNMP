@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.nmpubaya.cerbung.databinding.CardParagraphBinding
 
 class ParagraphAdapter(val paragraphs: ArrayList<Paragraph>): RecyclerView.Adapter<ParagraphAdapter.ParagraphViewHolder>() {
-    class ParagraphViewHolder(binding: CardParagraphBinding): RecyclerView.ViewHolder(binding.root)
+    class ParagraphViewHolder(val binding: CardParagraphBinding): RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ParagraphViewHolder {
         val binding = CardParagraphBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -18,6 +18,6 @@ class ParagraphAdapter(val paragraphs: ArrayList<Paragraph>): RecyclerView.Adapt
     }
 
     override fun onBindViewHolder(holder: ParagraphViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        
     }
 }
