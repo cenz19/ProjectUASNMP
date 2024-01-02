@@ -9,9 +9,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.nmpubaya.cerbung.databinding.FragmentReadRestrictedBinding
 import com.squareup.picasso.Picasso
 import org.json.JSONObject
@@ -23,8 +26,43 @@ private const val ARG_ID = "id"
 
 class ReadRestrictedFragment : Fragment() {
     private var cerbung: Cerbung? = null
+    var paragraphs: ArrayList<Paragraph> = arrayListOf()
     private lateinit var binding: FragmentReadRestrictedBinding
     private var users_id: Int? =null
+
+    fun updateParagraph() {
+        val lm = LinearLayoutManager(activity)
+        with(binding.paragraphRecView) {
+            layoutManager = lm
+            setHasFixedSize(true)
+            adapter = ParagraphAdapter(paragraphs)
+        } }
+
+    fun refresh() {
+        val q = Volley.newRequestQueue(activity)
+        val url = "https://ubaya.me/native/160421005/get_all_paragraphs.php"
+        var stringRequest = object: StringRequest(Request.Method.POST, url,
+            {
+                Log.d("apiresult", it.toString())
+                val obj = JSONObject(it)
+                if (obj.getString("result") == "OK") {
+                    val data = obj.getJSONArray("data")
+                    val sType = object : TypeToken<List<Paragraph>>() { }.type
+                    paragraphs = Gson().fromJson(data.toString(), sType) as ArrayList<Paragraph>
+                    updateParagraph()
+                }
+            },
+            {
+                Log.e("apiresult", it.message.toString())
+            }) {
+            override fun getParams(): MutableMap<String, String>? {
+                val params = HashMap<String, String>()
+                params["cerbung_id"] = cerbung?.id.toString()
+                return params
+            }
+        }
+        q.add(stringRequest)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,6 +74,7 @@ class ReadRestrictedFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        refresh()
         arguments?.let {
             cerbung = it.getParcelable(ARG_CERBUNG)
             users_id = it.getInt(ARG_ID)
