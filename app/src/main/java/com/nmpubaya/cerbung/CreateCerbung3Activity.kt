@@ -42,13 +42,37 @@ class CreateCerbung3Activity : AppCompatActivity() {
                             Log.d("apiresult", it)
                             val objt = JSONObject(it)
                             if (objt.getString("result") == "OK") {
-                                dialog.setMessage("Successfully created cerbung\nReturn to Home to see it.")
-                                dialog.setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which ->
-                                    val i = Intent(this, HomeActivity::class.java)
-                                    startActivity(i)
-                                    finish()
-                                })
-                                dialog.create().show()
+                                val url_update = "https://ubaya.me/native/160421005/update_paragraph.php"
+                                val req = object : StringRequest(Request.Method.POST, url_update,
+                                    {
+                                        Log.d("apiresult", it)
+                                        val obe = JSONObject(it)
+                                        if (obe.getString("result") == "OK") {
+                                            dialog.setMessage("Successfully created cerbung\nReturn to Home to see it.")
+                                            dialog.setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which ->
+                                                val i = Intent(this, HomeActivity::class.java)
+                                                startActivity(i)
+                                                finish()
+                                            })
+                                            dialog.create().show()
+                                        }
+                                    },
+                                    {
+                                        Log.e("apiresult", it.message.toString())
+                                        dialog.setMessage("Failed to create cerbung")
+                                        dialog.setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which ->
+                                            dialog.dismiss()
+                                        })
+                                        dialog.create().show()
+                                    }
+                                ) {
+                                    override fun getParams(): MutableMap<String, String>? {
+                                        val params = HashMap<String, String>()
+                                        params["cerbung_id"] = id_cerbung.toString()
+                                        return params
+                                    }
+                                }
+                                q.add(req)
                             }
                         },
                         {
