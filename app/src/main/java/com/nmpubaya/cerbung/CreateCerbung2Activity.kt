@@ -22,7 +22,7 @@ class CreateCerbung2Activity : AppCompatActivity() {
         val img_cover = intent.getStringExtra(CreateCerbung1Activity.KEY_IMG_COVER)
         val genre = intent.getParcelableExtra(CreateCerbung1Activity.KEY_GENRE) as Genre?
         var access = intent.getIntExtra(KEY_ACCESS, 0)
-        var first_par = intent.getStringExtra(KEY_FIRST_PARAGRAPH)
+        val first_par = intent.getStringExtra(KEY_FIRST_PARAGRAPH)
 
         if (access == 1) {
             binding.radioBtnRestricted.isChecked = true
