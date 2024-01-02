@@ -20,14 +20,12 @@ class HomeActivity : AppCompatActivity() {
         val sharedFile = "com.nmpubaya.cerbung"
         val sharedPreferences = getSharedPreferences(sharedFile, Context.MODE_PRIVATE)
         val id = sharedPreferences.getInt(MainActivity.KEY_USER_ID, 0)
-        val username = sharedPreferences.getString(MainActivity.KEY_USERNAME, "")
-        val num_follower = sharedPreferences.getInt(MainActivity.KEY_NUM_FOLLOWER, 0)
 
         fragment.add(HomeFragment())
         fragment.add(FollowingFragment.newInstance(id))
         fragment.add(CreateFragment.newInstance(id))
         fragment.add(UsersFragment())
-        fragment.add(PrefsFragment())
+        fragment.add(PrefsFragment.newInstance(id))
 
         binding.viewPager.adapter = MyAdapter(this, fragment)
 

@@ -27,9 +27,56 @@ class CreateCerbung3Activity : AppCompatActivity() {
                                 access: Int, first_par: String, users_id: Int, waktu_dibuat: String) {
         val q = Volley.newRequestQueue(this)
         val url = "https://ubaya.me/native/160421005/create_cerbung.php"
+        val dialog = AlertDialog.Builder(this)
         val stringRequest = object : StringRequest(Request.Method.POST, url,
             {
                 Log.d("apiresult", it)
+                val obj = JSONObject(it)
+                if (obj.getString("result") == "OK") {
+                    val msg = obj.getString("msg")
+                    val sType = object : TypeToken<Int>() { }.type
+                    val id_cerbung = Gson().fromJson(msg.toString(), sType) as Int
+                    val urlPar = "https://ubaya.me/native/160421005/create_paragraph.php"
+                    val strReq = object : StringRequest(Request.Method.POST, urlPar,
+                        {
+                            Log.d("apiresult", it)
+                            val objt = JSONObject(it)
+                            if (objt.getString("result") == "OK") {
+                                dialog.setMessage("Successfully created cerbung\nReturn to Home to see it.")
+                                dialog.setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which ->
+                                    val i = Intent(this, HomeActivity::class.java)
+                                    startActivity(i)
+                                    finish()
+                                })
+                                dialog.create().show()
+                            }
+                        },
+                        {
+                            Log.e("apiresult", it.message.toString())
+                            dialog.setMessage("Failed to create cerbung")
+                            dialog.setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which ->
+                                dialog.dismiss()
+                            })
+                            dialog.create().show()
+                        }
+                    ) {
+                        override fun getParams(): MutableMap<String, String>? {
+                            val params = HashMap<String, String>()
+                            params["isi"] = first_par
+                            params["waktu_buat"] = waktu_dibuat
+                            params["cerbung_id"] = id_cerbung.toString()
+                            params["users_id"] = users_id.toString()
+                            return params
+                        }
+                    }
+                    q.add(strReq)
+                } else {
+                    dialog.setMessage("Failed to create cerbung")
+                    dialog.setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which ->
+                        dialog.dismiss()
+                    })
+                    dialog.create().show()
+                }
             },
             {
                 Log.e("apiresult", it.printStackTrace().toString())
@@ -91,15 +138,18 @@ class CreateCerbung3Activity : AppCompatActivity() {
         }
 
         binding.btnPublish3.setOnClickListener {
+            val dialog = AlertDialog.Builder(this)
             if (binding.checkBox.isChecked) {
-                Toast.makeText(this, "$id, $title, $desc, $img_cover, ${genre?.id}, $access, $first_paragraph, $waktu_dibuat", Toast.LENGTH_LONG).show()
                 if (title != null && desc != null && img_cover != null && first_paragraph != null) {
                     insertAndPublishCerbung(title, desc, img_cover, genre!!.id, access, first_paragraph, id, waktu_dibuat)
                 } else {
-                    Toast.makeText(this, "Null object", Toast.LENGTH_LONG).show()
+                    dialog.setMessage("There are still empty field. Please enter it")
+                    dialog.setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which ->
+                        dialog.dismiss()
+                    })
+                    dialog.create().show()
                 }
             } else {
-                val dialog = AlertDialog.Builder(this)
                 dialog.setMessage("Please tick on the checkbox to accept the terms.")
                 dialog.setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which ->
                     dialog.dismiss()

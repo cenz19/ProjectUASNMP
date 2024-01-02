@@ -15,8 +15,6 @@ class CreateFragment : Fragment() {
     private lateinit var binding: FragmentCreateBinding
     private var id: Int? = null
 
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {

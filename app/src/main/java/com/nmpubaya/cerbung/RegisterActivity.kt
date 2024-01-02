@@ -20,6 +20,7 @@ class RegisterActivity : AppCompatActivity() {
     fun register(username:String, password:String, regPass:String, urlProfile:String) {
         val q = Volley.newRequestQueue(this)
         val url = "https://ubaya.me/native/160421005/get_user.php"
+        val dialog = AlertDialog.Builder(this)
         val stringRequest = object : StringRequest(Request.Method.POST, url,
             {
                 Log.d("apiresult", it)
@@ -30,7 +31,6 @@ class RegisterActivity : AppCompatActivity() {
                         val regStrRequest = object : StringRequest(Request.Method.POST, regUrl,
                             {
                                 Log.d("apiresult", it)
-                                val dialog = AlertDialog.Builder(this)
                                 dialog.setMessage("Thanks for registering\nPlease login with your new account")
                                 dialog.setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which ->
                                     val i = Intent(this, MainActivity::class.java)
@@ -41,7 +41,6 @@ class RegisterActivity : AppCompatActivity() {
                             },
                             {
                                 Log.e("apiresult", it.printStackTrace().toString())
-                                val dialog = AlertDialog.Builder(this)
                                 dialog.setMessage("Failed to register")
                                 dialog.setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which ->
                                     dialog.dismiss()
@@ -59,7 +58,6 @@ class RegisterActivity : AppCompatActivity() {
                         }
                         q.add(regStrRequest)
                     } else {
-                        val dialog = AlertDialog.Builder(this)
                         dialog.setMessage("Password doesn't match")
                         dialog.setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which ->
                             dialog.dismiss()
@@ -67,7 +65,6 @@ class RegisterActivity : AppCompatActivity() {
                         dialog.create().show()
                     }
                 } else if (obj.getString("result") == "OK") {
-                    val dialog = AlertDialog.Builder(this)
                     dialog.setMessage("Username already exists")
                     dialog.setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which ->
                         dialog.dismiss()

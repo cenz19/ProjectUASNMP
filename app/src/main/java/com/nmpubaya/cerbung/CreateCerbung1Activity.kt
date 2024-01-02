@@ -84,6 +84,5 @@ class CreateCerbung1Activity : AppCompatActivity() {
         binding.txtCerbungImageCover.setText(img_cover)
 
         getDataPage1(id)
-
     }
 }

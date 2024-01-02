@@ -23,21 +23,18 @@ class MainActivity : AppCompatActivity() {
     companion object {
         val KEY_USER_ID = "id"
         val KEY_USERNAME = "username"
-        val KEY_NUM_FOLLOWER = "num_follower"
         val KEY_URL_PROFILE = "url_profile"
     }
 
     fun cekLogin(username:String, password:String) {
         val sharedFile = "com.nmpubaya.cerbung"
         val sharedPreferences = getSharedPreferences(sharedFile, Context.MODE_PRIVATE)
-        val id = sharedPreferences.getInt(KEY_USER_ID, 0)
-        val username_user = sharedPreferences.getString(KEY_USERNAME, "")
-        val num_follower = sharedPreferences.getInt(KEY_NUM_FOLLOWER, 0)
-        val url_profile = sharedPreferences.getString(KEY_URL_PROFILE, "")
+
         val editor = sharedPreferences.edit()
 
         val q = Volley.newRequestQueue(this)
-        val url = "https://ubaya.me/native/160421005/get_user.php"
+        val url = "https://ubaya.me/native/160421005/cek_login.php"
+        val dialog = AlertDialog.Builder(this)
         val stringRequest = object : StringRequest(Request.Method.POST, url,
             {
                 Log.d("apiresult", it)
@@ -48,7 +45,6 @@ class MainActivity : AppCompatActivity() {
                         val dataUser = data.getJSONObject(0)
                         val sType = object : TypeToken<User>() { }.type
                         val user = Gson().fromJson(dataUser.toString(), sType) as User
-                        val dialog = AlertDialog.Builder(this)
                         dialog.setMessage("Login Successful, Welcome ${user.username}")
                         dialog.setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which ->
                             editor.putInt(KEY_USER_ID, user.id)
@@ -61,7 +57,6 @@ class MainActivity : AppCompatActivity() {
                         })
                         dialog.create().show()
                     } else {
-                        val dialog = AlertDialog.Builder(this)
                         dialog.setMessage("Username or Password is incorrect")
                         dialog.setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which ->
                             dialog.dismiss()
@@ -91,12 +86,26 @@ class MainActivity : AppCompatActivity() {
 
         val sharedFile = "com.nmpubaya.cerbung"
         val sharedPreferences = getSharedPreferences(sharedFile, Context.MODE_PRIVATE)
+        val id = sharedPreferences.getInt(KEY_USER_ID, 0)
+        val username_user = sharedPreferences.getString(KEY_USERNAME, "")
+        val url_profile = sharedPreferences.getString(KEY_URL_PROFILE, "")
         val nightMode = sharedPreferences.getBoolean("night", false)
+
+        if (id != 0 && username_user != "" && url_profile != "") {
+            val i = Intent(this, HomeActivity::class.java)
+            i.putExtra(KEY_USER_ID, id)
+            i.putExtra(KEY_USERNAME, username_user)
+            i.putExtra(KEY_URL_PROFILE, url_profile)
+            startActivity(i)
+            finish()
+        }
+
         if (nightMode) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
         } else {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         }
+
 
         binding.btnLogin.setOnClickListener {
             val username = binding.txtUsernameLogin.text.toString()

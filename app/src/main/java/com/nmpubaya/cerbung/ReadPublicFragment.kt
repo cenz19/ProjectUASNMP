@@ -83,21 +83,19 @@ class ReadPublicFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        with (binding) {
-            var url = cerbung?.url_gambar
-            var builder = Picasso.Builder(view.context)
-            builder.listener { picasso, uri, exception ->  exception.printStackTrace()}
-            Picasso.get().load(url).into(imgCerbung)
-            txtJudul.text = cerbung?.title
-            txtListCount.text = cerbung?.num_paragraph.toString()
-            txtLikeCount.text = cerbung?.num_likes.toString()
-            txtCreator.text = cerbung?.username
-            txtDateCreated.text = cerbung?.waktu_dibuat
-            txtGenre.text = cerbung?.genre
+        var url = cerbung?.url_gambar
+        var builder = Picasso.Builder(view.context)
+        builder.listener { picasso, uri, exception ->  exception.printStackTrace()}
+        Picasso.get().load(url).into(binding.imgCerbung)
+        binding.txtJudul.text = cerbung?.title
+        binding.txtListCount.text = cerbung?.num_paragraph.toString()
+        binding.txtLikeCount.text = cerbung?.num_likes.toString()
+        binding.txtCreator.text = cerbung?.username
+        binding.txtDateCreated.text = cerbung?.waktu_dibuat
+        binding.txtGenre.text = cerbung?.genre
 
-            btnFollow.setOnClickListener {
-                followCerbung(cerbung!!.id, cerbung!!.users_id, 1)
-            }
+        binding.btnFollow.setOnClickListener {
+            followCerbung(cerbung!!.id, cerbung!!.users_id, 1)
         }
     }
 
