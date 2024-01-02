@@ -67,6 +67,11 @@ class MainActivity : AppCompatActivity() {
             },
             {
                 Log.e("apiresult", it.printStackTrace().toString())
+                dialog.setMessage("Username or Password is incorrect")
+                dialog.setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which ->
+                    dialog.dismiss()
+                })
+                dialog.create().show()
             }
         ) {
             override fun getParams(): MutableMap<String, String>? {
