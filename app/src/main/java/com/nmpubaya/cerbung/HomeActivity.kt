@@ -3,6 +3,7 @@ package com.nmpubaya.cerbung
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
@@ -17,6 +18,7 @@ class HomeActivity : AppCompatActivity() {
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setSupportActionBar(binding.toolbar)
         val sharedFile = "com.nmpubaya.cerbung"
         val sharedPreferences = getSharedPreferences(sharedFile, Context.MODE_PRIVATE)
         val id = sharedPreferences.getInt(MainActivity.KEY_USER_ID, 0)
@@ -46,5 +48,9 @@ class HomeActivity : AppCompatActivity() {
             }
             true
         }
+    }
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.toolbar_menu, menu)
+        return true
     }
 }
