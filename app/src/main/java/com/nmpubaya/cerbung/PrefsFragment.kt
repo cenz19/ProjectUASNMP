@@ -164,6 +164,7 @@ class PrefsFragment : Fragment() {
             editor?.remove(MainActivity.KEY_USERNAME)
             editor?.apply()
             startActivity(intent)
+            activity?.finish()
         }
     }
 
