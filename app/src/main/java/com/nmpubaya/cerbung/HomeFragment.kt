@@ -15,10 +15,12 @@ import com.android.volley.Request
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
-class HomeFragment : Fragment() {
+private const val ARG_ID = "users_id"
 
+class HomeFragment : Fragment() {
     var cerbungs: ArrayList<Cerbung> = arrayListOf()
     private lateinit var binding:FragmentHomeBinding
+    private var users_id: Int? = null
 
     fun updateList() {
         //Fungsi ini untuk setup adapter
@@ -26,8 +28,7 @@ class HomeFragment : Fragment() {
         with(binding.cerbungRecView) {
             layoutManager = lm
             setHasFixedSize(true)
-            setHasOptionsMenu(true)
-            adapter = CerbungAdapter(cerbungs)
+            adapter = CerbungAdapter(cerbungs, users_id!!)
         }
     }
     fun reload(){
@@ -56,10 +57,16 @@ class HomeFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         reload()
+        arguments?.let {
+            users_id = it.getInt(ARG_ID)
+        }
     }
     override fun onResume() {
         super.onResume()
         reload()
+        arguments?.let {
+            users_id = it.getInt(ARG_ID)
+        }
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -72,10 +79,10 @@ class HomeFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(param1: String, param2: String) =
+        fun newInstance(users_id: Int) =
             HomeFragment().apply {
                 arguments = Bundle().apply {
-
+                    putInt(ARG_ID, users_id)
                 }
             }
     }

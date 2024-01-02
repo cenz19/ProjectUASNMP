@@ -21,7 +21,7 @@ class HomeActivity : AppCompatActivity() {
         val sharedPreferences = getSharedPreferences(sharedFile, Context.MODE_PRIVATE)
         val id = sharedPreferences.getInt(MainActivity.KEY_USER_ID, 0)
 
-        fragment.add(HomeFragment())
+        fragment.add(HomeFragment.newInstance(id))
         fragment.add(FollowingFragment.newInstance(id))
         fragment.add(CreateFragment.newInstance(id))
         fragment.add(UsersFragment())

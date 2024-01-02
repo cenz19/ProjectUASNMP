@@ -22,7 +22,7 @@ private const val ARG_FOLLOW = "follow"
 class FollowingFragment : Fragment() {
     private lateinit var binding: FragmentFollowingBinding
     var cerbungs: ArrayList<Cerbung> = arrayListOf()
-    private var id: Int? = null
+    private var users_id: Int? = null
 
     fun updateList() {
         val lm = LinearLayoutManager(activity)
@@ -62,19 +62,20 @@ class FollowingFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            id = it.getInt(ARG_FOLLOW)
-            reload(id!!)
+            users_id = it.getInt(ARG_FOLLOW)
         }
+        reload(users_id!!)
 
     }
 
     override fun onResume() {
         super.onResume()
         arguments?.let {
-            id = it.getInt(ARG_FOLLOW)
-            reload(id!!)
+            users_id = it.getInt(ARG_FOLLOW)
         }
+        reload(users_id!!)
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

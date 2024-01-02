@@ -14,7 +14,7 @@ import com.nmpubaya.cerbung.databinding.CardCerbungBinding
 import com.squareup.picasso.Picasso
 import org.json.JSONObject
 
-class CerbungAdapter(val cerbungs: ArrayList<Cerbung>): RecyclerView.Adapter<CerbungAdapter.CerbungViewHolder>() {
+class CerbungAdapter(val cerbungs: ArrayList<Cerbung>, val users_id: Int): RecyclerView.Adapter<CerbungAdapter.CerbungViewHolder>() {
     class CerbungViewHolder(val binding: CardCerbungBinding): RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CerbungViewHolder {
@@ -24,6 +24,7 @@ class CerbungAdapter(val cerbungs: ArrayList<Cerbung>): RecyclerView.Adapter<Cer
 
     companion object {
         val KEY_CERBUNG_ID = "cerbung_id"
+        val KEY_USERS_ID = "users_id"
     }
 
     override fun getItemCount(): Int {
@@ -46,6 +47,7 @@ class CerbungAdapter(val cerbungs: ArrayList<Cerbung>): RecyclerView.Adapter<Cer
                 val id = cerbungs[position].id
                 val intent = Intent(it.context, ReadCerbungActivity::class.java)
                 intent.putExtra(KEY_CERBUNG_ID, id)
+                intent.putExtra(KEY_USERS_ID, users_id)
                 it.context.startActivity(intent)
             }
         }

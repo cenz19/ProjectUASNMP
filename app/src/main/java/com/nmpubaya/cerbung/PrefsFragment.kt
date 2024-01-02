@@ -3,6 +3,7 @@ package com.nmpubaya.cerbung
 import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -14,6 +15,7 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.nmpubaya.cerbung.databinding.FragmentPrefsBinding
 import com.squareup.picasso.Picasso
+import org.json.JSONObject
 
 private const val ARG_ID = "id"
 
@@ -45,12 +47,47 @@ class PrefsFragment : Fragment() {
         return binding.root
     }
 
+    fun clearData() {
+        binding.txtOldPasswordPref.text?.clear()
+        binding.txtNewPasswordPref.text?.clear()
+        binding.txtRetypePasswordPref.text?.clear()
+        binding.imgProfile.focusable
+    }
+
     fun updatePassword(old_pass: String, new_pass: String, retype_pass: String, users_id: Int) {
         val q = Volley.newRequestQueue(activity)
         val url = "https://ubaya.me/native/160421005/update_password.php"
+        val dialog = AlertDialog.Builder(requireActivity())
+
         val stringRequest = object : StringRequest(Request.Method.POST, url,
-            {},
-            {}
+            {
+                Log.d("apiresult", it)
+                val obj = JSONObject(it)
+                if (obj.getString("result") == "OK") {
+                    dialog.setMessage("Successfully changed the password")
+                    dialog.setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which ->
+                        clearData()
+                        dialog.dismiss()
+                    })
+                    dialog.create().show()
+                } else {
+                    dialog.setMessage("Cannot change the password\nPlease check again")
+                    dialog.setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which ->
+                        clearData()
+                        dialog.dismiss()
+                    })
+                    dialog.create().show()
+                }
+            },
+            {
+                Log.e("apiresult", it.toString())
+                dialog.setMessage("Cannot change the password\nPlease check again")
+                dialog.setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which ->
+                    clearData()
+                    dialog.dismiss()
+                })
+                dialog.create().show()
+            }
         ) {
             override fun getParams(): MutableMap<String, String>? {
                 val params = HashMap<String, String>()

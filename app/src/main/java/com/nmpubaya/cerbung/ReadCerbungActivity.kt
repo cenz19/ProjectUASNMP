@@ -14,7 +14,7 @@ import org.json.JSONObject
 
 class ReadCerbungActivity : AppCompatActivity() {
 
-    fun getAccessCerbung(cerbung_id: Int){
+    fun getAccessCerbung(cerbung_id: Int, users_id: Int){
         val q = Volley.newRequestQueue(this)
         val url = "https://ubaya.me/native/160421005/get_cerbung.php"
         var stringRequest = object : StringRequest(
@@ -29,13 +29,13 @@ class ReadCerbungActivity : AppCompatActivity() {
                         val sType = object : TypeToken<Cerbung>() { }.type
                         val cerbung = Gson().fromJson(dataCerbung.toString(), sType) as Cerbung
                         if (cerbung.access == 1) {
-                            val restrictedFragment = ReadRestrictedFragment.newInstance(cerbung)
+                            val restrictedFragment = ReadRestrictedFragment.newInstance(cerbung, users_id)
                             supportFragmentManager.beginTransaction().apply {
                                 add(R.id.container, restrictedFragment)
                                 commit()
                             }
                         } else {
-                            val publicFragment = ReadPublicFragment.newInstance(cerbung)
+                            val publicFragment = ReadPublicFragment.newInstance(cerbung, users_id)
                             supportFragmentManager.beginTransaction().apply {
                                 add(R.id.container, publicFragment)
                                 commit()
@@ -60,6 +60,7 @@ class ReadCerbungActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_read_cerbung)
         val cerbungId = intent.getIntExtra(CerbungAdapter.KEY_CERBUNG_ID, 0)
-        getAccessCerbung(cerbungId)
+        val users_id = intent.getIntExtra(CerbungAdapter.KEY_USERS_ID, 0)
+        getAccessCerbung(cerbungId, users_id)
     }
 }
