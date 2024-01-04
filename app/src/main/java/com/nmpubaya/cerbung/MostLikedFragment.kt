@@ -39,7 +39,7 @@ class MostLikedFragment : Fragment() {
                 val obj = JSONObject(it)
                 if (obj.getString("result") == "OK") {
                     val data = obj.getJSONArray("data")
-                    val sType = object : TypeToken<List<Cerbung>>() { }.type
+                    val sType = object : TypeToken<List<User>>() { }.type
                     users = Gson().fromJson(data.toString(), sType) as ArrayList<User>
                     updateList()
                 }
