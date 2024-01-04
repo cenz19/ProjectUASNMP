@@ -56,6 +56,7 @@ class MostLikedFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        reload()
         arguments?.let {
 
         }
@@ -63,6 +64,7 @@ class MostLikedFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        reload()
         (activity as AppCompatActivity).supportActionBar?.title = "Users"
     }
 
