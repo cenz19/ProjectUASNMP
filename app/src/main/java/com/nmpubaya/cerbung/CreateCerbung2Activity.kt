@@ -3,6 +3,7 @@ package com.nmpubaya.cerbung
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.core.widget.doOnTextChanged
 import com.nmpubaya.cerbung.databinding.ActivityCreateCerbung2Binding
 
 class CreateCerbung2Activity : AppCompatActivity() {
@@ -45,6 +46,10 @@ class CreateCerbung2Activity : AppCompatActivity() {
             } else {
                 access = 1
             }
+        }
+
+        binding.txtWriteFirstParagraph.doOnTextChanged { text, start, before, count ->
+            binding.txtChar.text = binding.txtWriteFirstParagraph.text?.count().toString()
         }
 
         binding.txtWriteFirstParagraph.setText(first_par)
