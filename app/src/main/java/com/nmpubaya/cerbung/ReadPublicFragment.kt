@@ -108,7 +108,7 @@ class ReadPublicFragment : Fragment() {
                     params["isi"] = binding.txtNewPar.text.toString()
                     params["waktu_buat"] = waktu_buat.toString()
                     params["cerbung_id"] = cerbung?.id.toString()
-                    params["users_id"] = users_id.toString()
+                    params["users_id"] = user_id.toString()
                     return params
                 }
 
@@ -270,8 +270,4 @@ class ReadPublicFragment : Fragment() {
         (activity as AppCompatActivity).setSupportActionBar(binding.toolbar)
         (activity as AppCompatActivity).supportActionBar?.title = "Read Cerbung"
     }
-
-
-
-
 }

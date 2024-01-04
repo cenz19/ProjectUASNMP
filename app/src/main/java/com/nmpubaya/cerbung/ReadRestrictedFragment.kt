@@ -19,6 +19,8 @@ import com.google.gson.reflect.TypeToken
 import com.nmpubaya.cerbung.databinding.FragmentReadRestrictedBinding
 import com.squareup.picasso.Picasso
 import org.json.JSONObject
+import java.text.SimpleDateFormat
+import java.util.Calendar
 
 
 private const val ARG_CERBUNG = "cerbung"
@@ -137,6 +139,54 @@ class ReadRestrictedFragment : Fragment() {
         }
         q.add(stringRequest)
     }
+    fun getAccess(cerbung_id: Int, users_id: Int) {
+        val q = Volley.newRequestQueue(activity)
+        val url = "https://ubaya.me/native/160421005/create_access.php"
+        val dialog = AlertDialog.Builder(activity)
+        val stringRequest = object : StringRequest(Request.Method.POST, url,
+            {
+                Log.d("apiresult", it)
+                val obj = JSONObject(it)
+                if (obj.getString("result") == "OK") {
+                    dialog.setMessage("Access request is sent to the Cerbung maker")
+                    dialog.setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which ->
+                        dialog.dismiss()
+                    })
+                    dialog.create().show()
+                } else if (obj.getString("result") == "ERROR") {
+                    if (obj.getString("msg") == "Data already exists") {
+                        dialog.setMessage("You already sent the request to contribute to Cerbung maker")
+                        dialog.setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which ->
+                            dialog.dismiss()
+                        })
+                        dialog.create().show()
+                    }
+                }
+            },
+            {
+                Log.e("apiresult", it.message.toString())
+                dialog.setMessage("Failed to create request to Cerbung maker")
+                dialog.setPositiveButton("OK", DialogInterface.OnClickListener { dialog, which ->
+                    dialog.dismiss()
+                })
+                dialog.create().show()
+            }
+        ) {
+            override fun getParams(): MutableMap<String, String>? {
+                val params = HashMap<String, String>()
+                params["cerbung_id"] = cerbung_id.toString()
+                params["users_id"] = users_id.toString()
+                params["notifications_id"] = "1"
+                params["status_approval"] = "0"
+                val date = Calendar.getInstance().time
+                val formatter = SimpleDateFormat("yyyy-MM-dd")
+                val waktu_notif = formatter.format(date)
+                params["waktu_notif"] = waktu_notif
+                return params
+            }
+        }
+        q.add(stringRequest)
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -158,6 +208,12 @@ class ReadRestrictedFragment : Fragment() {
             val user_id = users_id
 //            Toast.makeText(activity, "Cer ID: $cerbung_id, User: $user_id", Toast.LENGTH_LONG).show()
             followCerbung(cerbung_id!!, user_id!!)
+        }
+
+        binding.btnSubmit.setOnClickListener {
+            val cerbung_id = cerbung?.id
+            val user_id = users_id
+            getAccess(cerbung_id!!, user_id!!)
         }
     }
 

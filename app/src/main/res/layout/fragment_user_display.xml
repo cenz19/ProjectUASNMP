@@ -32,7 +32,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/txtDate"
+                    android:id="@+id/txtUser"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
@@ -51,7 +51,7 @@
                     android:text="Likes  | "
                     android:textSize="16sp"
                     app:layout_constraintStart_toEndOf="@+id/txtLikes"
-                    app:layout_constraintTop_toBottomOf="@+id/txtDate" />
+                    app:layout_constraintTop_toBottomOf="@+id/txtUser" />
 
                 <TextView
                     android:id="@+id/txtCerbungCount"
@@ -62,7 +62,7 @@
                     android:text="XX"
                     android:textSize="16sp"
                     app:layout_constraintStart_toEndOf="@+id/textView15"
-                    app:layout_constraintTop_toBottomOf="@+id/txtDate" />
+                    app:layout_constraintTop_toBottomOf="@+id/txtUser" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -72,7 +72,7 @@
                     android:text="Cerbungs Created"
                     android:textSize="16sp"
                     app:layout_constraintStart_toEndOf="@+id/txtCerbungCount"
-                    app:layout_constraintTop_toBottomOf="@+id/txtDate" />
+                    app:layout_constraintTop_toBottomOf="@+id/txtUser" />
 
                 <TextView
                     android:id="@+id/textView18"
@@ -94,7 +94,7 @@
                     android:text="XXX"
                     android:textSize="16sp"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/txtDate" />
+                    app:layout_constraintTop_toBottomOf="@+id/txtUser" />
 
                 <TextView
                     android:id="@+id/txtLastUpdate"
