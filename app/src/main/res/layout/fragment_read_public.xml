@@ -44,11 +44,13 @@
 
                 <TextView
                     android:id="@+id/txtJudul"
+                    style="@style/TextAppearance.Material3.HeadlineLarge"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="8dp"
                     android:text="TextView"
+                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/imgCerbung" />
 
@@ -98,8 +100,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="8dp"
-                    android:background="#00BF7878"
+                    android:background="#9B4146"
+                    android:padding="10dp"
                     android:text="TextView"
+                    android:textColor="#FFFFFF"
+                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/imageView8" />
 
@@ -110,6 +115,7 @@
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="8dp"
                     android:text="by"
+                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/txtGenre" />
 
@@ -118,10 +124,11 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="8dp"
                     android:text="TextView"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView12"
                     app:layout_constraintStart_toEndOf="@+id/textView12"
-                    app:layout_constraintTop_toBottomOf="@+id/txtGenre" />
+                    app:layout_constraintTop_toTopOf="@+id/textView12" />
 
                 <TextView
                     android:id="@+id/txtDateCreated"
@@ -135,11 +142,9 @@
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/paragraphRecView"
-                    android:layout_width="372dp"
-                    android:layout_height="244dp"
-                    android:layout_marginStart="16dp"
+                    android:layout_width="0dp"
+                    android:layout_height="400dp"
                     android:layout_marginTop="16dp"
-                    android:layout_marginEnd="16dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/txtCreator" />
@@ -213,16 +218,6 @@
                     android:text="("
                     app:layout_constraintEnd_toStartOf="@+id/txtChar"
                     app:layout_constraintTop_toBottomOf="@+id/textInputLayout8" />
-
-                <TextView
-                    android:id="@+id/txtTesting"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:layout_marginTop="24dp"
-                    android:text="TextView"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/btnFollow" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>

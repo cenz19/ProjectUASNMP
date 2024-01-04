@@ -92,13 +92,14 @@ class ReadPublicFragment : Fragment() {
         val waktu_buat = formatter.format(date)
         val user_id = users_id!!
 
-        binding.txtTesting.text = String.format("waktu $waktu_buat, cerbungid ${cerbung!!.id} , userid $user_id")
+
         binding.btnSubmit.setOnClickListener {
             val q = Volley.newRequestQueue(activity)
             val url = "https://ubaya.me/native/160421005/create_paragraph.php"
             val stringRequest = object : StringRequest(com.android.volley.Request.Method.POST, url, {
                 Toast.makeText(activity, "Added Successfully", Toast.LENGTH_LONG).show()
-
+                refresh()
+                binding.txtNewPar.setText("").toString()
             },{
 
             }){
