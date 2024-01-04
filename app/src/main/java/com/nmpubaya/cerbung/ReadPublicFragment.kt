@@ -148,6 +148,8 @@ class ReadPublicFragment : Fragment() {
             cerbung = it.getParcelable(ARG_CERBUNG)
             users_id = it.getInt(ARG_ID)
         }
+        (activity as AppCompatActivity).setSupportActionBar(binding.toolbar)
+        (activity as AppCompatActivity).supportActionBar?.title = "Read Cerbung"
     }
 
     override fun onCreateView(
@@ -208,8 +210,8 @@ class ReadPublicFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         (activity as AppCompatActivity).setSupportActionBar(binding.toolbar)
         (activity as AppCompatActivity).supportActionBar?.title = "Read Cerbung"
-        var url = cerbung?.url_gambar
-        var builder = Picasso.Builder(view.context)
+        val url = cerbung?.url_gambar
+        val builder = Picasso.Builder(view.context)
         builder.listener { picasso, uri, exception ->  exception.printStackTrace()}
         Picasso.get().load(url).into(binding.imgCerbung)
         binding.txtJudul.text = cerbung?.title

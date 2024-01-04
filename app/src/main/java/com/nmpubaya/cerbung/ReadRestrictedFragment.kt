@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
@@ -79,6 +80,8 @@ class ReadRestrictedFragment : Fragment() {
             cerbung = it.getParcelable(ARG_CERBUNG)
             users_id = it.getInt(ARG_ID)
         }
+        (activity as AppCompatActivity).setSupportActionBar(binding.toolbar)
+        (activity as AppCompatActivity).supportActionBar?.title = "Read Cerbung"
     }
 
     override fun onCreateView(
@@ -137,9 +140,10 @@ class ReadRestrictedFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        var url = cerbung?.url_gambar
-        var builder = Picasso.Builder(view.context)
+        (activity as AppCompatActivity).setSupportActionBar(binding.toolbar)
+        (activity as AppCompatActivity).supportActionBar?.title = "Read Cerbung"
+        val url = cerbung?.url_gambar
+        val builder = Picasso.Builder(view.context)
         builder.listener { picasso, uri, exception ->  exception.printStackTrace()}
         Picasso.get().load(url).into(binding.imgCerbung)
         binding.txtJudul.text = cerbung?.title
