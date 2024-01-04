@@ -41,7 +41,7 @@ class ReadRestrictedFragment : Fragment() {
     fun refresh() {
         val q = Volley.newRequestQueue(activity)
         val url = "https://ubaya.me/native/160421005/get_all_paragraphs.php"
-        var stringRequest = object: StringRequest(Request.Method.POST, url,
+        val stringRequest = object: StringRequest(Request.Method.POST, url,
             {
                 Log.d("apiresult", it.toString())
                 val obj = JSONObject(it)
