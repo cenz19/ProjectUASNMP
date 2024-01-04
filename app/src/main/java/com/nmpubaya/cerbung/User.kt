@@ -9,4 +9,5 @@ data class User(var id: Int,
                 var username: String,
                 var password: String,
                 var url_profile: String,
-                var waktu_gabung: Date) : Parcelable
+                var waktu_gabung: Date,
+                var num_likes: Int) : Parcelable
