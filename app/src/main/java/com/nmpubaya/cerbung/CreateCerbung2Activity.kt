@@ -24,7 +24,7 @@ class CreateCerbung2Activity : AppCompatActivity() {
         val desc = intent.getStringExtra(CreateCerbung1Activity.KEY_DESC)
         val img_cover = intent.getStringExtra(CreateCerbung1Activity.KEY_IMG_COVER)
         val genre = intent.getParcelableExtra(CreateCerbung1Activity.KEY_GENRE) as Genre?
-        var access = intent.getIntExtra(KEY_ACCESS, 0)
+        var access = intent.getIntExtra(KEY_ACCESS, 1)
         val first_par = intent.getStringExtra(KEY_FIRST_PARAGRAPH)
 
         if (access == 1) {

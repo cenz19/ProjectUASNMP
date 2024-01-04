@@ -175,13 +175,14 @@ class ReadRestrictedFragment : Fragment() {
             override fun getParams(): MutableMap<String, String>? {
                 val params = HashMap<String, String>()
                 params["cerbung_id"] = cerbung_id.toString()
-                params["users_id"] = users_id.toString()
+                params["author_id"] = cerbung!!.users_id.toString()
                 params["notifications_id"] = "1"
                 params["status_approval"] = "0"
                 val date = Calendar.getInstance().time
                 val formatter = SimpleDateFormat("yyyy-MM-dd")
                 val waktu_notif = formatter.format(date)
                 params["waktu_notif"] = waktu_notif
+                params["users_id"] = users_id.toString()
                 return params
             }
         }
