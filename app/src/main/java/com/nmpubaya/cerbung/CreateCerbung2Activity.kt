@@ -15,6 +15,8 @@ class CreateCerbung2Activity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityCreateCerbung2Binding.inflate(layoutInflater)
         setContentView(binding.root)
+        setSupportActionBar(binding.toolbar)
+        supportActionBar?.title = "Create Cerbung"
 
         val id = intent.getIntExtra(CreateCerbung1Activity.KEY_ID, 0)
         val title = intent.getStringExtra(CreateCerbung1Activity.KEY_TITLE)
