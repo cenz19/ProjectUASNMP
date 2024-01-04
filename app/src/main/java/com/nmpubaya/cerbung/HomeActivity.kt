@@ -1,9 +1,11 @@
 package com.nmpubaya.cerbung
 
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
@@ -48,9 +50,21 @@ class HomeActivity : AppCompatActivity() {
             }
             true
         }
+
     }
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.toolbar_menu, menu)
         return true
     }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.btnNotification -> {
+                val intent = Intent(this, NotificationActivity::class.java)
+                startActivity(intent)
+            }
+            android.R.id.home -> onBackPressed()
+        }
+        return true
+    }
+
 }
