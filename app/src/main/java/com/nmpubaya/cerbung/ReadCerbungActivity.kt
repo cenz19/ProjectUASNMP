@@ -10,9 +10,11 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.nmpubaya.cerbung.databinding.ActivityReadCerbungBinding
 import org.json.JSONObject
 
 class ReadCerbungActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityReadCerbungBinding
 
     fun getAccessCerbung(cerbung_id: Int, users_id: Int){
         val q = Volley.newRequestQueue(this)
@@ -58,7 +60,8 @@ class ReadCerbungActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_read_cerbung)
+        binding = ActivityReadCerbungBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         val cerbungId = intent.getIntExtra(CerbungAdapter.KEY_CERBUNG_ID, 0)
         val users_id = intent.getIntExtra(CerbungAdapter.KEY_USERS_ID, 0)
         getAccessCerbung(cerbungId, users_id)

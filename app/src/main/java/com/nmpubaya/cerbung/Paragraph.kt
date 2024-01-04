@@ -9,4 +9,6 @@ data class Paragraph(var id:Int,
                      var isi:String,
                      var waktu_buat:Date,
                      var cerbung_id:Int,
-                     var author_id:Int) : Parcelable
+                     var users_id:Int,
+                     var username:String,
+                     var is_like:Boolean) : Parcelable

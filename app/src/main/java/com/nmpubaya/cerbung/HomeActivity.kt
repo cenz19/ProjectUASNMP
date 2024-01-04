@@ -19,8 +19,8 @@ class HomeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         setSupportActionBar(binding.toolbar)
+
         val sharedFile = "com.nmpubaya.cerbung"
         val sharedPreferences = getSharedPreferences(sharedFile, Context.MODE_PRIVATE)
         val id = sharedPreferences.getInt(MainActivity.KEY_USER_ID, 0)
@@ -48,6 +48,7 @@ class HomeActivity : AppCompatActivity() {
                 R.id.itemPrefs -> 4
                 else -> 0
             }
+
             true
         }
 

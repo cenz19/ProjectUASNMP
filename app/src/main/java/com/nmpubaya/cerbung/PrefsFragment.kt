@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.ActivityCompat.finishAffinity
 import com.android.volley.Request
@@ -38,6 +39,7 @@ class PrefsFragment : Fragment() {
         arguments?.let {
             id = it.getInt(ARG_ID)
         }
+        (activity as AppCompatActivity).supportActionBar?.title = "Preferences"
     }
 
     override fun onCreateView(
@@ -105,6 +107,7 @@ class PrefsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (activity as AppCompatActivity).supportActionBar?.title = "Preferences"
 
         val sharedFile = "com.nmpubaya.cerbung"
         val sharedPreferences = activity?.getSharedPreferences(sharedFile, Context.MODE_PRIVATE)

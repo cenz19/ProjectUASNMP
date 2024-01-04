@@ -18,6 +18,14 @@ class ParagraphAdapter(val paragraphs: ArrayList<Paragraph>): RecyclerView.Adapt
     }
 
     override fun onBindViewHolder(holder: ParagraphViewHolder, position: Int) {
-        
+        with(holder.binding) {
+            txtParagraf.text = paragraphs[position].isi
+            txtUser.text = paragraphs[position].username
+            btnLike.setOnClickListener {
+                val user_id = paragraphs[position].users_id
+                val par_id = paragraphs[position].id
+                val like = paragraphs[position].is_like
+            }
+        }
     }
 }

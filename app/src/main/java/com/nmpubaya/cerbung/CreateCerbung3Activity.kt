@@ -45,6 +45,7 @@ class CreateCerbung3Activity : AppCompatActivity() {
                                 val url_update = "https://ubaya.me/native/160421005/update_paragraph.php"
                                 val req = object : StringRequest(Request.Method.POST, url_update,
                                     {
+                                        Log.d("apiresult", it)
                                         val obe = JSONObject(it)
                                         if (obe.getString("result") == "OK") {
                                             dialog.setMessage("Successfully created cerbung\nReturn to Home to see it.")
@@ -71,6 +72,7 @@ class CreateCerbung3Activity : AppCompatActivity() {
                                         return params
                                     }
                                 }
+                                q.add(req)
                             }
                         },
                         {

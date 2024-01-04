@@ -9,9 +9,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.nmpubaya.cerbung.databinding.FragmentReadRestrictedBinding
 import com.squareup.picasso.Picasso
 import org.json.JSONObject
@@ -23,8 +27,43 @@ private const val ARG_ID = "id"
 
 class ReadRestrictedFragment : Fragment() {
     private var cerbung: Cerbung? = null
+    var paragraphs: ArrayList<Paragraph> = arrayListOf()
     private lateinit var binding: FragmentReadRestrictedBinding
     private var users_id: Int? =null
+
+    fun updateParagraph() {
+        val lm = LinearLayoutManager(activity)
+        with(binding.paragraphRecView) {
+            layoutManager = lm
+            setHasFixedSize(true)
+            adapter = ParagraphAdapter(paragraphs)
+        } }
+
+    fun refresh() {
+        val q = Volley.newRequestQueue(activity)
+        val url = "https://ubaya.me/native/160421005/get_all_paragraphs.php"
+        val stringRequest = object: StringRequest(Request.Method.POST, url,
+            {
+                Log.d("apiresult", it.toString())
+                val obj = JSONObject(it)
+                if (obj.getString("result") == "OK") {
+                    val data = obj.getJSONArray("data")
+                    val sType = object : TypeToken<List<Paragraph>>() { }.type
+                    paragraphs = Gson().fromJson(data.toString(), sType) as ArrayList<Paragraph>
+                    updateParagraph()
+                }
+            },
+            {
+                Log.e("apiresult", it.message.toString())
+            }) {
+            override fun getParams(): MutableMap<String, String>? {
+                val params = HashMap<String, String>()
+                params["cerbung_id"] = cerbung?.id.toString()
+                return params
+            }
+        }
+        q.add(stringRequest)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,10 +75,13 @@ class ReadRestrictedFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
+        refresh()
         arguments?.let {
             cerbung = it.getParcelable(ARG_CERBUNG)
             users_id = it.getInt(ARG_ID)
         }
+        (activity as AppCompatActivity).setSupportActionBar(binding.toolbar)
+        (activity as AppCompatActivity).supportActionBar?.title = "Read Cerbung"
     }
 
     override fun onCreateView(
@@ -98,9 +140,10 @@ class ReadRestrictedFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        var url = cerbung?.url_gambar
-        var builder = Picasso.Builder(view.context)
+        (activity as AppCompatActivity).setSupportActionBar(binding.toolbar)
+        (activity as AppCompatActivity).supportActionBar?.title = "Read Cerbung"
+        val url = cerbung?.url_gambar
+        val builder = Picasso.Builder(view.context)
         builder.listener { picasso, uri, exception ->  exception.printStackTrace()}
         Picasso.get().load(url).into(binding.imgCerbung)
         binding.txtJudul.text = cerbung?.title
