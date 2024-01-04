@@ -17,23 +17,23 @@
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout9" />
 
     <TextView
-        android:id="@+id/txtChar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="248dp"
+        android:id="@+id/textView7"
+        android:layout_width="8dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="244dp"
         android:layout_marginTop="12dp"
-        android:text="0"
+        android:text="("
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout9" />
 
     <TextView
-        android:id="@+id/textView7"
-        android:layout_width="8dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="240dp"
+        android:id="@+id/txtChar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
         android:layout_marginTop="12dp"
-        android:text="("
-        app:layout_constraintStart_toStartOf="parent"
+        android:text="0"
+        app:layout_constraintStart_toEndOf="@+id/textView7"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout9" />
 
     <androidx.appcompat.widget.Toolbar
@@ -98,8 +98,7 @@
             android:id="@+id/txtWriteFirstParagraph"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:gravity="top|start"
-            android:maxLength="70" />
+            android:gravity="top|start" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
