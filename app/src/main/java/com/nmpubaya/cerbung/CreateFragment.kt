@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.appcompat.app.AppCompatActivity
 import com.nmpubaya.cerbung.databinding.FragmentCreateBinding
 
 private const val ARG_ID = "id"
@@ -27,6 +28,7 @@ class CreateFragment : Fragment() {
         arguments?.let {
             id = it.getInt(ARG_ID)
         }
+        (activity as AppCompatActivity).supportActionBar?.title = "Create Cerbung"
     }
 
     override fun onCreateView(
@@ -40,6 +42,7 @@ class CreateFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (activity as AppCompatActivity).supportActionBar?.title = "Create Cerbung"
 
         binding.btnCreateNewCerbung.setOnClickListener {
             val intent = Intent(activity, CreateCerbung1Activity::class.java)

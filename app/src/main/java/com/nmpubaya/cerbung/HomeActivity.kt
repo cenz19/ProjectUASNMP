@@ -10,7 +10,6 @@ import androidx.viewpager2.widget.ViewPager2
 import com.nmpubaya.cerbung.databinding.ActivityHomeBinding
 
 class HomeActivity : AppCompatActivity() {
-
     private lateinit var binding:ActivityHomeBinding
     private var fragment:ArrayList<Fragment> = arrayListOf()
 

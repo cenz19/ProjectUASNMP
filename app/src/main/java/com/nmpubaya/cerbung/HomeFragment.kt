@@ -68,6 +68,7 @@ class HomeFragment : Fragment() {
         arguments?.let {
             users_id = it.getInt(ARG_ID)
         }
+        (activity as AppCompatActivity).supportActionBar?.title = "Cerbung"
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -80,6 +81,7 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (activity as AppCompatActivity).supportActionBar?.title = "Cerbung"
     }
 
     companion object {

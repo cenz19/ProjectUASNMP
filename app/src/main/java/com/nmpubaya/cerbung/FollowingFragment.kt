@@ -75,6 +75,7 @@ class FollowingFragment : Fragment() {
             users_id = it.getInt(ARG_FOLLOW)
         }
         reload(users_id!!)
+        (activity as AppCompatActivity).supportActionBar?.title = "Following"
     }
 
 
@@ -90,6 +91,7 @@ class FollowingFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        (activity as AppCompatActivity).supportActionBar?.title = "Following"
     }
 
     companion object {

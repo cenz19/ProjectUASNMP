@@ -10,7 +10,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
+import androidx.core.widget.doOnTextChanged
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
@@ -204,7 +206,8 @@ class ReadPublicFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        (activity as AppCompatActivity).setSupportActionBar(binding.toolbar)
+        (activity as AppCompatActivity).supportActionBar?.title = "Read Cerbung"
         var url = cerbung?.url_gambar
         var builder = Picasso.Builder(view.context)
         builder.listener { picasso, uri, exception ->  exception.printStackTrace()}
@@ -233,6 +236,10 @@ class ReadPublicFragment : Fragment() {
             if (isi != null) {
                 addParagraph(isi, waktu_buat, cerbung!!.id, user_id)
             }
+        }
+
+        binding.txtNewPar.doOnTextChanged { text, start, before, count ->
+            binding.txtChar.text = binding.txtNewPar.text?.count().toString()
         }
     }
 
