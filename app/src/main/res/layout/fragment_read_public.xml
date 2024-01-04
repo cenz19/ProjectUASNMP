@@ -44,13 +44,15 @@
 
                 <TextView
                     android:id="@+id/txtJudul"
-                    style="@style/TextAppearance.Material3.HeadlineLarge"
-                    android:layout_width="wrap_content"
+                    style="@style/TextAppearance.Material3.HeadlineMedium"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
                     android:layout_marginTop="8dp"
+                    android:layout_marginEnd="24dp"
                     android:text="TextView"
                     android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/imgCerbung" />
 
@@ -134,11 +136,11 @@
                     android:id="@+id/txtDateCreated"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="96dp"
                     android:layout_marginEnd="16dp"
                     android:text="TextView"
+                    app:layout_constraintBottom_toBottomOf="@+id/txtGenre"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imgCerbung" />
+                    app:layout_constraintTop_toTopOf="@+id/txtGenre" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/paragraphRecView"
