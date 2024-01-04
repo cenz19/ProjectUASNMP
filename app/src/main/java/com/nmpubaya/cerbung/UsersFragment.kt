@@ -6,14 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.viewpager2.widget.ViewPager2
 import com.nmpubaya.cerbung.databinding.FragmentUsersBinding
 
 class UsersFragment : Fragment() {
-
+    private lateinit var binding: FragmentUsersBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-
         }
     }
 
@@ -27,11 +27,18 @@ class UsersFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_users, container, false)
+//        return inflater.inflate(R.layout.fragment_users, container, false)
+        binding = FragmentUsersBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.viewPagerTab.registerOnPageChangeCallback(object:ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                binding.topNav.selectedTabPosition = binding.topNa
+            }
+        })
         (activity as AppCompatActivity).supportActionBar?.title = "Users"
     }
 

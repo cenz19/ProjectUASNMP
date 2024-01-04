@@ -16,8 +16,9 @@ import com.google.gson.reflect.TypeToken
 import com.nmpubaya.cerbung.databinding.FragmentMostLikedBinding
 import org.json.JSONObject
 
-
+private const val CONTENT = "content"
 class MostLikedFragment : Fragment() {
+    private var param1: String? = null
     private lateinit var binding: FragmentMostLikedBinding
     var users: ArrayList<User> = arrayListOf()
     fun updateList() {
@@ -58,7 +59,7 @@ class MostLikedFragment : Fragment() {
         super.onCreate(savedInstanceState)
         reload()
         arguments?.let {
-
+            param1 = it.getString(CONTENT)
         }
     }
 
@@ -74,8 +75,11 @@ class MostLikedFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
 //        return inflater.inflate(R.layout.fragment_most_liked, container, false)
-        binding = FragmentMostLikedBinding.inflate(inflater, container, false)
-        return binding.root
+        // Inflate the layout for this fragment
+//        var v = inflater.inflate(R.layout.fragment_most_liked, container, false)
+//        return v
+//        binding = FragmentMostLikedBinding.inflate(inflater, container, false)
+//        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
